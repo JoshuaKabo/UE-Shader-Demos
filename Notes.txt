@@ -1,0 +1,8 @@
+Requires UE4.27HTML5
+Requires Unreal JS  V8-9.7.106: https://github.com/ncsoft/Unreal.js-core/releases/tag/V8-9.7.106
+
+build and open proj first
+then
+extract src code to plugins/UnrealJS
+run ./install-v8-libs
+then rebuild proj from vs
