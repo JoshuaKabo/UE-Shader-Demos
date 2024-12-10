@@ -16481,6 +16481,47 @@ declare class K2Node_LeaderboardQuery extends K2Node_BaseAsyncTask {
 	static C(Other: UObject | any): K2Node_LeaderboardQuery;
 }
 
+declare class EyeTrackerStereoGazeData { 
+	LeftEyeOrigin: Vector;
+	LeftEyeDirection: Vector;
+	RightEyeOrigin: Vector;
+	RightEyeDirection: Vector;
+	FixationPoint: Vector;
+	ConfidenceValue: number;
+	clone() : EyeTrackerStereoGazeData;
+	static C(Other: UObject | any): EyeTrackerStereoGazeData;
+	GetStereoGazeData(): {OutGazeData: EyeTrackerStereoGazeData, $: boolean};
+	static GetStereoGazeData(OutGazeData?: EyeTrackerStereoGazeData): {OutGazeData: EyeTrackerStereoGazeData, $: boolean};
+}
+
+declare class EyeTrackerGazeData { 
+	GazeOrigin: Vector;
+	GazeDirection: Vector;
+	FixationPoint: Vector;
+	ConfidenceValue: number;
+	bIsLeftEyeBlink: boolean;
+	bIsRightEyeBlink: boolean;
+	LeftPupilDiameter: number;
+	RightPupilDiameter: number;
+	clone() : EyeTrackerGazeData;
+	static C(Other: UObject | any): EyeTrackerGazeData;
+	GetGazeData(): {OutGazeData: EyeTrackerGazeData, $: boolean};
+	static GetGazeData(OutGazeData?: EyeTrackerGazeData): {OutGazeData: EyeTrackerGazeData, $: boolean};
+}
+
+declare class EyeTrackerFunctionLibrary extends BlueprintFunctionLibrary { 
+	static Load(ResourceName: string): EyeTrackerFunctionLibrary;
+	static Find(Outer: UObject, ResourceName: string): EyeTrackerFunctionLibrary;
+	static GetDefaultObject(): EyeTrackerFunctionLibrary;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): EyeTrackerFunctionLibrary;
+	static SetEyeTrackedPlayer(PlayerController: PlayerController): void;
+	static IsStereoGazeDataAvailable(): boolean;
+	static IsEyeTrackerConnected(): boolean;
+	static GetStereoGazeData(OutGazeData?: EyeTrackerStereoGazeData): {OutGazeData: EyeTrackerStereoGazeData, $: boolean};
+	static GetGazeData(OutGazeData?: EyeTrackerGazeData): {OutGazeData: EyeTrackerGazeData, $: boolean};
+	static C(Other: UObject | any): EyeTrackerFunctionLibrary;
+}
+
 declare class LiveLinkBasicFrameInterpolationProcessor extends LiveLinkFrameInterpolationProcessor { 
 	bInterpolatePropertyValues: boolean;
 	static Load(ResourceName: string): LiveLinkBasicFrameInterpolationProcessor;
@@ -16951,47 +16992,6 @@ declare class OpenXRHandTrackingLiveLinkRemapAsset extends LiveLinkRetargetAsset
 	static GetDefaultObject(): OpenXRHandTrackingLiveLinkRemapAsset;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): OpenXRHandTrackingLiveLinkRemapAsset;
 	static C(Other: UObject | any): OpenXRHandTrackingLiveLinkRemapAsset;
-}
-
-declare class EyeTrackerStereoGazeData { 
-	LeftEyeOrigin: Vector;
-	LeftEyeDirection: Vector;
-	RightEyeOrigin: Vector;
-	RightEyeDirection: Vector;
-	FixationPoint: Vector;
-	ConfidenceValue: number;
-	clone() : EyeTrackerStereoGazeData;
-	static C(Other: UObject | any): EyeTrackerStereoGazeData;
-	GetStereoGazeData(): {OutGazeData: EyeTrackerStereoGazeData, $: boolean};
-	static GetStereoGazeData(OutGazeData?: EyeTrackerStereoGazeData): {OutGazeData: EyeTrackerStereoGazeData, $: boolean};
-}
-
-declare class EyeTrackerGazeData { 
-	GazeOrigin: Vector;
-	GazeDirection: Vector;
-	FixationPoint: Vector;
-	ConfidenceValue: number;
-	bIsLeftEyeBlink: boolean;
-	bIsRightEyeBlink: boolean;
-	LeftPupilDiameter: number;
-	RightPupilDiameter: number;
-	clone() : EyeTrackerGazeData;
-	static C(Other: UObject | any): EyeTrackerGazeData;
-	GetGazeData(): {OutGazeData: EyeTrackerGazeData, $: boolean};
-	static GetGazeData(OutGazeData?: EyeTrackerGazeData): {OutGazeData: EyeTrackerGazeData, $: boolean};
-}
-
-declare class EyeTrackerFunctionLibrary extends BlueprintFunctionLibrary { 
-	static Load(ResourceName: string): EyeTrackerFunctionLibrary;
-	static Find(Outer: UObject, ResourceName: string): EyeTrackerFunctionLibrary;
-	static GetDefaultObject(): EyeTrackerFunctionLibrary;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): EyeTrackerFunctionLibrary;
-	static SetEyeTrackedPlayer(PlayerController: PlayerController): void;
-	static IsStereoGazeDataAvailable(): boolean;
-	static IsEyeTrackerConnected(): boolean;
-	static GetStereoGazeData(OutGazeData?: EyeTrackerStereoGazeData): {OutGazeData: EyeTrackerStereoGazeData, $: boolean};
-	static GetGazeData(OutGazeData?: EyeTrackerGazeData): {OutGazeData: EyeTrackerGazeData, $: boolean};
-	static C(Other: UObject | any): EyeTrackerFunctionLibrary;
 }
 
 declare class VariantDependency { 
