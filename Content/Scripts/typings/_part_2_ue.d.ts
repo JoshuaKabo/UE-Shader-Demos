@@ -15419,115 +15419,848 @@ declare class VisualLoggerExtension extends UObject {
 	static C(Other: UObject | any): VisualLoggerExtension;
 }
 
-declare type EClothMassMode = 'UniformMass' | 'TotalMass' | 'Density' | 'MaxClothMassMode' | 'EClothMassMode_MAX';
-declare var EClothMassMode : { UniformMass:'UniformMass',TotalMass:'TotalMass',Density:'Density',MaxClothMassMode:'MaxClothMassMode',EClothMassMode_MAX:'EClothMassMode_MAX', };
-declare class ChaosClothWeightedValue { 
-	Low: number;
-	High: number;
-	clone() : ChaosClothWeightedValue;
-	static C(Other: UObject | any): ChaosClothWeightedValue;
+declare class VariantDependency { 
+	VariantSet: VariantSet;
+	Variant: Variant;
+	bEnabled: boolean;
+	clone() : VariantDependency;
+	static C(Other: UObject | any): VariantDependency;
 }
 
-declare type EChaosClothTetherMode = 'FastTetherFastLength' | 'AccurateTetherFastLength' | 'AccurateTetherAccurateLength' | 'MaxChaosClothTetherMode' | 'EChaosClothTetherMode_MAX';
-declare var EChaosClothTetherMode : { FastTetherFastLength:'FastTetherFastLength',AccurateTetherFastLength:'AccurateTetherFastLength',AccurateTetherAccurateLength:'AccurateTetherAccurateLength',MaxChaosClothTetherMode:'MaxChaosClothTetherMode',EChaosClothTetherMode_MAX:'EChaosClothTetherMode_MAX', };
-declare class ChaosClothConfig extends ClothConfigCommon { 
-	MassMode: EClothMassMode;
-	UniformMass: number;
-	TotalMass: number;
-	Density: number;
-	MinPerParticleMass: number;
-	EdgeStiffness: number;
-	BendingStiffness: number;
-	bUseBendingElements: boolean;
-	AreaStiffness: number;
-	VolumeStiffness: number;
-	TetherStiffness: ChaosClothWeightedValue;
-	LimitScale: number;
-	bUseGeodesicDistance: boolean;
-	ShapeTargetStiffness: number;
-	CollisionThickness: number;
-	FrictionCoefficient: number;
-	bUseCCD: boolean;
-	bUseSelfCollisions: boolean;
-	SelfCollisionThickness: number;
-	bUseLegacyBackstop: boolean;
-	DampingCoefficient: number;
-	bUsePointBasedWindModel: boolean;
-	DragCoefficient: number;
-	LiftCoefficient: number;
-	bUseGravityOverride: boolean;
-	GravityScale: number;
-	Gravity: Vector;
-	AnimDriveStiffness: ChaosClothWeightedValue;
-	AnimDriveDamping: ChaosClothWeightedValue;
-	LinearVelocityScale: Vector;
-	AngularVelocityScale: number;
-	FictitiousAngularScale: number;
-	bUseTetrahedralConstraints: boolean;
-	bUseThinShellVolumeConstraints: boolean;
-	bUseContinuousCollisionDetection: boolean;
-	TetherMode: EChaosClothTetherMode;
-	AnimDriveSpringStiffness: number;
-	StrainLimitingStiffness: number;
-	static Load(ResourceName: string): ChaosClothConfig;
-	static Find(Outer: UObject, ResourceName: string): ChaosClothConfig;
-	static GetDefaultObject(): ChaosClothConfig;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothConfig;
-	static C(Other: UObject | any): ChaosClothConfig;
+declare class CapturedPropSegment { 
+	PropertyName: string;
+	PropertyIndex: number;
+	ComponentName: string;
+	clone() : CapturedPropSegment;
+	static C(Other: UObject | any): CapturedPropSegment;
 }
 
-declare class ChaosClothSharedSimConfig extends ClothSharedConfigCommon { 
-	IterationCount: number;
-	SubdivisionCount: number;
-	SelfCollisionThickness: number;
-	CollisionThickness: number;
-	bUseDampingOverride: boolean;
-	Damping: number;
-	bUseGravityOverride: boolean;
-	GravityScale: number;
-	Gravity: Vector;
-	bUseLocalSpaceSimulation: boolean;
-	bUseXPBDConstraints: boolean;
-	static Load(ResourceName: string): ChaosClothSharedSimConfig;
-	static Find(Outer: UObject, ResourceName: string): ChaosClothSharedSimConfig;
-	static GetDefaultObject(): ChaosClothSharedSimConfig;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothSharedSimConfig;
-	static C(Other: UObject | any): ChaosClothSharedSimConfig;
+declare type EPropertyValueCategory = 'Undefined' | 'Generic' | 'RelativeLocation' | 'RelativeRotation' | 'RelativeScale3D' | 'Visibility' | 'Material' | 'Color' | 'Option' | 'EPropertyValueCategory_MAX';
+declare var EPropertyValueCategory : { Undefined:'Undefined',Generic:'Generic',RelativeLocation:'RelativeLocation',RelativeRotation:'RelativeRotation',RelativeScale3D:'RelativeScale3D',Visibility:'Visibility',Material:'Material',Color:'Color',Option:'Option',EPropertyValueCategory_MAX:'EPropertyValueCategory_MAX', };
+declare class PropertyValue extends UObject { 
+	Properties: any[];
+	PropertyIndices: number[];
+	CapturedPropSegments: CapturedPropSegment[];
+	FullDisplayString: string;
+	PropertySetterName: string;
+	PropertySetterParameterDefaults: any;
+	bHasRecordedData: boolean;
+	LeafPropertyClass: UnrealEngineClass;
+	ValueBytes: number[];
+	PropCategory: EPropertyValueCategory;
+	DisplayOrder: any;
+	static Load(ResourceName: string): PropertyValue;
+	static Find(Outer: UObject, ResourceName: string): PropertyValue;
+	static GetDefaultObject(): PropertyValue;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValue;
+	HasRecordedData(): boolean;
+	GetPropertyTooltip(): string;
+	GetFullDisplayString(): string;
+	static C(Other: UObject | any): PropertyValue;
 }
 
-declare class ChaosClothingSimulationFactory extends ClothingSimulationFactory { 
-	static Load(ResourceName: string): ChaosClothingSimulationFactory;
-	static Find(Outer: UObject, ResourceName: string): ChaosClothingSimulationFactory;
-	static GetDefaultObject(): ChaosClothingSimulationFactory;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothingSimulationFactory;
-	static C(Other: UObject | any): ChaosClothingSimulationFactory;
+declare class FunctionCaller { 
+	FunctionName: string;
+	FunctionEntry: any;
+	DisplayOrder: any;
+	clone() : FunctionCaller;
+	static C(Other: UObject | any): FunctionCaller;
 }
 
-declare class ChaosClothingInteractor extends ClothingInteractor { 
-	static Load(ResourceName: string): ChaosClothingInteractor;
-	static Find(Outer: UObject, ResourceName: string): ChaosClothingInteractor;
-	static GetDefaultObject(): ChaosClothingInteractor;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothingInteractor;
-	SetVelocityScale(LinearVelocityScale: Vector,AngularVelocityScale: number,FictitiousAngularScale: number): void;
-	SetMaterialLinear(EdgeStiffness: number,BendingStiffness: number,AreaStiffness: number): void;
-	SetLongRangeAttachmentLinear(TetherStiffness: number): void;
-	SetLongRangeAttachment(TetherStiffness: Vector2D): void;
-	SetGravity(GravityScale: number,bIsGravityOverridden: boolean,GravityOverride: Vector): void;
-	SetDamping(DampingCoefficient: number): void;
-	SetCollision(CollisionThickness: number,FrictionCoefficient: number,bUseCCD: boolean,SelfCollisionThickness: number): void;
-	SetAnimDriveLinear(AnimDriveStiffness: number): void;
-	SetAnimDrive(AnimDriveStiffness: Vector2D,AnimDriveDamping: Vector2D): void;
-	SetAerodynamics(DragCoefficient: number,LiftCoefficient: number,WindVelocity: Vector): void;
-	ResetAndTeleport(bReset: boolean,bTeleport: boolean): void;
-	static C(Other: UObject | any): ChaosClothingInteractor;
+declare class VariantObjectBinding extends UObject { 
+	CachedActorLabel: string;
+	ObjectPtr: SoftObjectPath;
+	LazyObjectPtr: any;
+	CapturedProperties: PropertyValue[];
+	FunctionCallers: FunctionCaller[];
+	static Load(ResourceName: string): VariantObjectBinding;
+	static Find(Outer: UObject, ResourceName: string): VariantObjectBinding;
+	static GetDefaultObject(): VariantObjectBinding;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): VariantObjectBinding;
+	static C(Other: UObject | any): VariantObjectBinding;
 }
 
-declare class ChaosClothingSimulationInteractor extends ClothingSimulationInteractor { 
-	static Load(ResourceName: string): ChaosClothingSimulationInteractor;
-	static Find(Outer: UObject, ResourceName: string): ChaosClothingSimulationInteractor;
-	static GetDefaultObject(): ChaosClothingSimulationInteractor;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothingSimulationInteractor;
-	static C(Other: UObject | any): ChaosClothingSimulationInteractor;
+declare class Variant extends UObject { 
+	Dependencies: VariantDependency[];
+	DisplayText: string;
+	ObjectBindings: VariantObjectBinding[];
+	Thumbnail: Texture2D;
+	static Load(ResourceName: string): Variant;
+	static Find(Outer: UObject, ResourceName: string): Variant;
+	static GetDefaultObject(): Variant;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Variant;
+	SwitchOn(): void;
+	SetThumbnailFromTexture(NewThumbnail: Texture2D): void;
+	SetThumbnailFromFile(FilePath: string): void;
+	SetThumbnailFromEditorViewport(): void;
+	SetThumbnailFromCamera(WorldContextObject: UObject,CameraTransform: Transform,FOVDegrees: number,MinZ: number,Gamma: number): void;
+	SetDisplayText(NewDisplayText: string): void;
+	SetDependency(index: number,Dependency?: VariantDependency): {Dependency: VariantDependency};
+	IsActive(): boolean;
+	GetThumbnail(): Texture2D;
+	GetParent(): VariantSet;
+	GetNumDependencies(): number;
+	GetNumActors(): number;
+	GetDisplayText(): string;
+	GetDependents(LevelVariantSets: LevelVariantSets,bOnlyEnabledDependencies: boolean): Variant[];
+	GetDependency(index: number): VariantDependency;
+	GetActor(ActorIndex: number): Actor;
+	DeleteDependency(index: number): void;
+	AddDependency(Dependency?: VariantDependency): {Dependency: VariantDependency, $: number};
+	static C(Other: UObject | any): Variant;
+}
+
+declare class VariantSet extends UObject { 
+	DisplayText: string;
+	bExpanded: boolean;
+	Variants: Variant[];
+	Thumbnail: Texture2D;
+	static Load(ResourceName: string): VariantSet;
+	static Find(Outer: UObject, ResourceName: string): VariantSet;
+	static GetDefaultObject(): VariantSet;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): VariantSet;
+	SetThumbnailFromTexture(NewThumbnail: Texture2D): void;
+	SetThumbnailFromFile(FilePath: string): void;
+	SetThumbnailFromEditorViewport(): void;
+	SetThumbnailFromCamera(WorldContextObject: UObject,CameraTransform: Transform,FOVDegrees: number,MinZ: number,Gamma: number): void;
+	SetDisplayText(NewDisplayText: string): void;
+	GetVariantByName(VariantName: string): Variant;
+	GetVariant(VariantIndex: number): Variant;
+	GetThumbnail(): Texture2D;
+	GetParent(): LevelVariantSets;
+	GetNumVariants(): number;
+	GetDisplayText(): string;
+	static C(Other: UObject | any): VariantSet;
+}
+
+declare class LevelVariantSets extends UObject { 
+	DirectorBlueprint: UObject;
+	DirectorClass: UnrealEngineClass;
+	VariantSets: VariantSet[];
+	static Load(ResourceName: string): LevelVariantSets;
+	static Find(Outer: UObject, ResourceName: string): LevelVariantSets;
+	static GetDefaultObject(): LevelVariantSets;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): LevelVariantSets;
+	GetVariantSetByName(VariantSetName: string): VariantSet;
+	GetVariantSet(VariantSetIndex: number): VariantSet;
+	GetNumVariantSets(): number;
+	static C(Other: UObject | any): LevelVariantSets;
+}
+
+declare class LevelVariantSetsActor extends Actor { 
+	LevelVariantSets: SoftObjectPath;
+	DirectorInstances: any;
+	static GetDefaultObject(): LevelVariantSetsActor;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): LevelVariantSetsActor;
+	SwitchOnVariantByName(VariantSetName: string,VariantName: string): boolean;
+	SwitchOnVariantByIndex(VariantSetIndex: number,VariantIndex: number): boolean;
+	SetLevelVariantSets(InVariantSets: LevelVariantSets): void;
+	GetLevelVariantSets(bLoad: boolean): LevelVariantSets;
+	static C(Other: UObject | any): LevelVariantSetsActor;
+}
+
+declare class LevelVariantSetsFunctionDirector extends UObject { 
+	static Load(ResourceName: string): LevelVariantSetsFunctionDirector;
+	static Find(Outer: UObject, ResourceName: string): LevelVariantSetsFunctionDirector;
+	static GetDefaultObject(): LevelVariantSetsFunctionDirector;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): LevelVariantSetsFunctionDirector;
+	static C(Other: UObject | any): LevelVariantSetsFunctionDirector;
+}
+
+declare class PropertyValueTransform extends PropertyValue { 
+	static Load(ResourceName: string): PropertyValueTransform;
+	static Find(Outer: UObject, ResourceName: string): PropertyValueTransform;
+	static GetDefaultObject(): PropertyValueTransform;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueTransform;
+	static C(Other: UObject | any): PropertyValueTransform;
+}
+
+declare class PropertyValueVisibility extends PropertyValue { 
+	static Load(ResourceName: string): PropertyValueVisibility;
+	static Find(Outer: UObject, ResourceName: string): PropertyValueVisibility;
+	static GetDefaultObject(): PropertyValueVisibility;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueVisibility;
+	static C(Other: UObject | any): PropertyValueVisibility;
+}
+
+declare class PropertyValueColor extends PropertyValue { 
+	static Load(ResourceName: string): PropertyValueColor;
+	static Find(Outer: UObject, ResourceName: string): PropertyValueColor;
+	static GetDefaultObject(): PropertyValueColor;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueColor;
+	static C(Other: UObject | any): PropertyValueColor;
+}
+
+declare class PropertyValueMaterial extends PropertyValue { 
+	static Load(ResourceName: string): PropertyValueMaterial;
+	static Find(Outer: UObject, ResourceName: string): PropertyValueMaterial;
+	static GetDefaultObject(): PropertyValueMaterial;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueMaterial;
+	static C(Other: UObject | any): PropertyValueMaterial;
+}
+
+declare class PropertyValueOption extends PropertyValue { 
+	static Load(ResourceName: string): PropertyValueOption;
+	static Find(Outer: UObject, ResourceName: string): PropertyValueOption;
+	static GetDefaultObject(): PropertyValueOption;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueOption;
+	static C(Other: UObject | any): PropertyValueOption;
+}
+
+declare class PropertyValueSoftObject extends PropertyValue { 
+	static Load(ResourceName: string): PropertyValueSoftObject;
+	static Find(Outer: UObject, ResourceName: string): PropertyValueSoftObject;
+	static GetDefaultObject(): PropertyValueSoftObject;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueSoftObject;
+	static C(Other: UObject | any): PropertyValueSoftObject;
+}
+
+declare class SwitchActor extends Actor { 
+	SceneComponent: SceneComponent;
+	LastSelectedOption: number;
+	static GetDefaultObject(): SwitchActor;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): SwitchActor;
+	SelectOption(OptionIndex: number): void;
+	GetSelectedOption(): number;
+	GetOptions(): Actor[];
+	static C(Other: UObject | any): SwitchActor;
+}
+
+declare class DatasmithObjectTemplate extends UObject { 
+	static Load(ResourceName: string): DatasmithObjectTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithObjectTemplate;
+	static GetDefaultObject(): DatasmithObjectTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithObjectTemplate;
+	static C(Other: UObject | any): DatasmithObjectTemplate;
+}
+
+declare class DatasmithActorTemplate extends DatasmithObjectTemplate { 
+	Layers: any;
+	Tags: any;
+	static Load(ResourceName: string): DatasmithActorTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithActorTemplate;
+	static GetDefaultObject(): DatasmithActorTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithActorTemplate;
+	static C(Other: UObject | any): DatasmithActorTemplate;
+}
+
+declare class DatasmithAdditionalData extends UObject { 
+	static Load(ResourceName: string): DatasmithAdditionalData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithAdditionalData;
+	static GetDefaultObject(): DatasmithAdditionalData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithAdditionalData;
+	static C(Other: UObject | any): DatasmithAdditionalData;
+}
+
+declare type EDatasmithAreaLightActorType = 'Point' | 'Spot' | 'Rect' | 'EDatasmithAreaLightActorType_MAX';
+declare var EDatasmithAreaLightActorType : { Point:'Point',Spot:'Spot',Rect:'Rect',EDatasmithAreaLightActorType_MAX:'EDatasmithAreaLightActorType_MAX', };
+declare type EDatasmithAreaLightActorShape = 'Rectangle' | 'Disc' | 'Sphere' | 'Cylinder' | 'None' | 'EDatasmithAreaLightActorShape_MAX';
+declare var EDatasmithAreaLightActorShape : { Rectangle:'Rectangle',Disc:'Disc',Sphere:'Sphere',Cylinder:'Cylinder',None:'None',EDatasmithAreaLightActorShape_MAX:'EDatasmithAreaLightActorShape_MAX', };
+declare class DatasmithAreaLightActor extends Actor { 
+	Mobility: EComponentMobility;
+	LightType: EDatasmithAreaLightActorType;
+	LightShape: EDatasmithAreaLightActorShape;
+	Dimensions: Vector2D;
+	Intensity: number;
+	IntensityUnits: ELightUnits;
+	Color: LinearColor;
+	Temperature: number;
+	IESTexture: TextureLightProfile;
+	bUseIESBrightness: boolean;
+	IESBrightnessScale: number;
+	Rotation: Rotator;
+	SourceRadius: number;
+	SourceLength: number;
+	AttenuationRadius: number;
+	SpotlightInnerAngle: number;
+	SpotlightOuterAngle: number;
+	static GetDefaultObject(): DatasmithAreaLightActor;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithAreaLightActor;
+	static C(Other: UObject | any): DatasmithAreaLightActor;
+}
+
+declare class DatasmithAreaLightActorTemplate extends DatasmithObjectTemplate { 
+	LightType: EDatasmithAreaLightActorType;
+	LightShape: EDatasmithAreaLightActorShape;
+	Dimensions: Vector2D;
+	Color: LinearColor;
+	Intensity: number;
+	IntensityUnits: ELightUnits;
+	Temperature: number;
+	IESTexture: TextureLightProfile;
+	bUseIESBrightness: boolean;
+	IESBrightnessScale: number;
+	Rotation: Rotator;
+	SourceRadius: number;
+	SourceLength: number;
+	AttenuationRadius: number;
+	static Load(ResourceName: string): DatasmithAreaLightActorTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithAreaLightActorTemplate;
+	static GetDefaultObject(): DatasmithAreaLightActorTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithAreaLightActorTemplate;
+	static C(Other: UObject | any): DatasmithAreaLightActorTemplate;
+}
+
+declare class DatasmithAssetImportOptions { 
+	PackagePath: string;
+	clone() : DatasmithAssetImportOptions;
+	static C(Other: UObject | any): DatasmithAssetImportOptions;
+}
+
+declare class DatasmithAssetImportData extends AssetImportData { 
+	AssetImportOptions: DatasmithAssetImportOptions;
+	AdditionalData: DatasmithAdditionalData[];
+	static Load(ResourceName: string): DatasmithAssetImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithAssetImportData;
+	static GetDefaultObject(): DatasmithAssetImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithAssetImportData;
+	static C(Other: UObject | any): DatasmithAssetImportData;
+}
+
+declare type EDatasmithImportLightmapMin = 'LIGHTMAP_16' | 'LIGHTMAP_32' | 'LIGHTMAP_64' | 'LIGHTMAP_128' | 'LIGHTMAP_256' | 'LIGHTMAP_512' | 'LIGHTMAP_MAX';
+declare var EDatasmithImportLightmapMin : { LIGHTMAP_16:'LIGHTMAP_16',LIGHTMAP_32:'LIGHTMAP_32',LIGHTMAP_64:'LIGHTMAP_64',LIGHTMAP_128:'LIGHTMAP_128',LIGHTMAP_256:'LIGHTMAP_256',LIGHTMAP_512:'LIGHTMAP_512',LIGHTMAP_MAX:'LIGHTMAP_MAX', };
+declare type EDatasmithImportLightmapMax = 'LIGHTMAP_64' | 'LIGHTMAP_128' | 'LIGHTMAP_256' | 'LIGHTMAP_512' | 'LIGHTMAP_1024' | 'LIGHTMAP_2048' | 'LIGHTMAP_4096' | 'LIGHTMAP_MAX';
+declare var EDatasmithImportLightmapMax : { LIGHTMAP_64:'LIGHTMAP_64',LIGHTMAP_128:'LIGHTMAP_128',LIGHTMAP_256:'LIGHTMAP_256',LIGHTMAP_512:'LIGHTMAP_512',LIGHTMAP_1024:'LIGHTMAP_1024',LIGHTMAP_2048:'LIGHTMAP_2048',LIGHTMAP_4096:'LIGHTMAP_4096',LIGHTMAP_MAX:'LIGHTMAP_MAX', };
+declare class DatasmithStaticMeshImportOptions { 
+	MinLightmapResolution: EDatasmithImportLightmapMin;
+	MaxLightmapResolution: EDatasmithImportLightmapMax;
+	bGenerateLightmapUVs: boolean;
+	bRemoveDegenerates: boolean;
+	clone() : DatasmithStaticMeshImportOptions;
+	static C(Other: UObject | any): DatasmithStaticMeshImportOptions;
+}
+
+declare class DatasmithStaticMeshImportData extends DatasmithAssetImportData { 
+	ImportOptions: DatasmithStaticMeshImportOptions;
+	static Load(ResourceName: string): DatasmithStaticMeshImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshImportData;
+	static GetDefaultObject(): DatasmithStaticMeshImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshImportData;
+	static C(Other: UObject | any): DatasmithStaticMeshImportData;
+}
+
+declare type EDatasmithCADStitchingTechnique = 'StitchingNone' | 'StitchingHeal' | 'StitchingSew' | 'EDatasmithCADStitchingTechnique_MAX';
+declare var EDatasmithCADStitchingTechnique : { StitchingNone:'StitchingNone',StitchingHeal:'StitchingHeal',StitchingSew:'StitchingSew',EDatasmithCADStitchingTechnique_MAX:'EDatasmithCADStitchingTechnique_MAX', };
+declare class DatasmithTessellationOptions { 
+	ChordTolerance: number;
+	MaxEdgeLength: number;
+	NormalTolerance: number;
+	StitchingTechnique: EDatasmithCADStitchingTechnique;
+	clone() : DatasmithTessellationOptions;
+	static C(Other: UObject | any): DatasmithTessellationOptions;
+}
+
+declare class DatasmithStaticMeshCADImportData extends DatasmithStaticMeshImportData { 
+	TessellationOptions: DatasmithTessellationOptions;
+	ModelUnit: any;
+	ModelTolerance: any;
+	ResourcePath: string;
+	ResourceFilename: string;
+	AuxiliaryFilenames: string[];
+	static Load(ResourceName: string): DatasmithStaticMeshCADImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshCADImportData;
+	static GetDefaultObject(): DatasmithStaticMeshCADImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshCADImportData;
+	static C(Other: UObject | any): DatasmithStaticMeshCADImportData;
+}
+
+declare type EDatasmithImportScene = 'NewLevel' | 'CurrentLevel' | 'AssetsOnly' | 'EDatasmithImportScene_MAX';
+declare var EDatasmithImportScene : { NewLevel:'NewLevel',CurrentLevel:'CurrentLevel',AssetsOnly:'AssetsOnly',EDatasmithImportScene_MAX:'EDatasmithImportScene_MAX', };
+declare class DatasmithImportBaseOptions { 
+	SceneHandling: EDatasmithImportScene;
+	bIncludeGeometry: boolean;
+	bIncludeMaterial: boolean;
+	bIncludeLight: boolean;
+	bIncludeCamera: boolean;
+	bIncludeAnimation: boolean;
+	AssetOptions: DatasmithAssetImportOptions;
+	StaticMeshOptions: DatasmithStaticMeshImportOptions;
+	clone() : DatasmithImportBaseOptions;
+	static C(Other: UObject | any): DatasmithImportBaseOptions;
+}
+
+declare class DatasmithSceneImportData extends AssetImportData { 
+	BaseOptions: DatasmithImportBaseOptions;
+	static Load(ResourceName: string): DatasmithSceneImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithSceneImportData;
+	static GetDefaultObject(): DatasmithSceneImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSceneImportData;
+	static C(Other: UObject | any): DatasmithSceneImportData;
+}
+
+declare class DatasmithOptionsBase extends UObject { 
+	static Load(ResourceName: string): DatasmithOptionsBase;
+	static Find(Outer: UObject, ResourceName: string): DatasmithOptionsBase;
+	static GetDefaultObject(): DatasmithOptionsBase;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithOptionsBase;
+	static C(Other: UObject | any): DatasmithOptionsBase;
+}
+
+declare class DatasmithTranslatedSceneImportData extends DatasmithSceneImportData { 
+	AdditionalOptions: DatasmithOptionsBase[];
+	static Load(ResourceName: string): DatasmithTranslatedSceneImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithTranslatedSceneImportData;
+	static GetDefaultObject(): DatasmithTranslatedSceneImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithTranslatedSceneImportData;
+	static C(Other: UObject | any): DatasmithTranslatedSceneImportData;
+}
+
+declare class DatasmithCADImportSceneData extends DatasmithSceneImportData { 
+	TessellationOptions: DatasmithTessellationOptions;
+	static Load(ResourceName: string): DatasmithCADImportSceneData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithCADImportSceneData;
+	static GetDefaultObject(): DatasmithCADImportSceneData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCADImportSceneData;
+	static C(Other: UObject | any): DatasmithCADImportSceneData;
+}
+
+declare class DatasmithMDLSceneImportData extends DatasmithSceneImportData { 
+	static Load(ResourceName: string): DatasmithMDLSceneImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithMDLSceneImportData;
+	static GetDefaultObject(): DatasmithMDLSceneImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithMDLSceneImportData;
+	static C(Other: UObject | any): DatasmithMDLSceneImportData;
+}
+
+declare class DatasmithGLTFSceneImportData extends DatasmithSceneImportData { 
+	Generator: string;
+	Version: number;
+	Author: string;
+	License: string;
+	Source: string;
+	static Load(ResourceName: string): DatasmithGLTFSceneImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithGLTFSceneImportData;
+	static GetDefaultObject(): DatasmithGLTFSceneImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithGLTFSceneImportData;
+	static C(Other: UObject | any): DatasmithGLTFSceneImportData;
+}
+
+declare class DatasmithStaticMeshGLTFImportData extends DatasmithStaticMeshImportData { 
+	SourceMeshName: string;
+	static Load(ResourceName: string): DatasmithStaticMeshGLTFImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshGLTFImportData;
+	static GetDefaultObject(): DatasmithStaticMeshGLTFImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshGLTFImportData;
+	static C(Other: UObject | any): DatasmithStaticMeshGLTFImportData;
+}
+
+declare class DatasmithFBXSceneImportData extends DatasmithSceneImportData { 
+	bGenerateLightmapUVs: boolean;
+	TexturesDir: string;
+	IntermediateSerialization: number;
+	bColorizeMaterials: boolean;
+	static Load(ResourceName: string): DatasmithFBXSceneImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithFBXSceneImportData;
+	static GetDefaultObject(): DatasmithFBXSceneImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithFBXSceneImportData;
+	static C(Other: UObject | any): DatasmithFBXSceneImportData;
+}
+
+declare class DatasmithDeltaGenAssetImportData extends DatasmithAssetImportData { 
+	static Load(ResourceName: string): DatasmithDeltaGenAssetImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithDeltaGenAssetImportData;
+	static GetDefaultObject(): DatasmithDeltaGenAssetImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithDeltaGenAssetImportData;
+	static C(Other: UObject | any): DatasmithDeltaGenAssetImportData;
+}
+
+declare class DatasmithDeltaGenSceneImportData extends DatasmithFBXSceneImportData { 
+	bMergeNodes: boolean;
+	bOptimizeDuplicatedNodes: boolean;
+	bRemoveInvisibleNodes: boolean;
+	bSimplifyNodeHierarchy: boolean;
+	bImportVar: boolean;
+	VarPath: string;
+	bImportPos: boolean;
+	PosPath: string;
+	bImportTml: boolean;
+	TmlPath: string;
+	static Load(ResourceName: string): DatasmithDeltaGenSceneImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithDeltaGenSceneImportData;
+	static GetDefaultObject(): DatasmithDeltaGenSceneImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithDeltaGenSceneImportData;
+	static C(Other: UObject | any): DatasmithDeltaGenSceneImportData;
+}
+
+declare class DatasmithVREDAssetImportData extends DatasmithAssetImportData { 
+	static Load(ResourceName: string): DatasmithVREDAssetImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithVREDAssetImportData;
+	static GetDefaultObject(): DatasmithVREDAssetImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithVREDAssetImportData;
+	static C(Other: UObject | any): DatasmithVREDAssetImportData;
+}
+
+declare class DatasmithVREDSceneImportData extends DatasmithFBXSceneImportData { 
+	bMergeNodes: boolean;
+	bOptimizeDuplicatedNodes: boolean;
+	bImportMats: boolean;
+	MatsPath: string;
+	bImportVar: boolean;
+	bCleanVar: boolean;
+	VarPath: string;
+	bImportLightInfo: boolean;
+	LightInfoPath: string;
+	bImportClipInfo: boolean;
+	ClipInfoPath: string;
+	static Load(ResourceName: string): DatasmithVREDSceneImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithVREDSceneImportData;
+	static GetDefaultObject(): DatasmithVREDSceneImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithVREDSceneImportData;
+	static C(Other: UObject | any): DatasmithVREDSceneImportData;
+}
+
+declare class DatasmithIFCSceneImportData extends DatasmithSceneImportData { 
+	static Load(ResourceName: string): DatasmithIFCSceneImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithIFCSceneImportData;
+	static GetDefaultObject(): DatasmithIFCSceneImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithIFCSceneImportData;
+	static C(Other: UObject | any): DatasmithIFCSceneImportData;
+}
+
+declare class DatasmithStaticMeshIFCImportData extends DatasmithStaticMeshImportData { 
+	SourceGlobalId: string;
+	static Load(ResourceName: string): DatasmithStaticMeshIFCImportData;
+	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshIFCImportData;
+	static GetDefaultObject(): DatasmithStaticMeshIFCImportData;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshIFCImportData;
+	static C(Other: UObject | any): DatasmithStaticMeshIFCImportData;
+}
+
+declare class DatasmithCameraLookatTrackingSettingsTemplate { 
+	bEnableLookAtTracking: boolean;
+	bAllowRoll: boolean;
+	ActorToTrack: Actor;
+	clone() : DatasmithCameraLookatTrackingSettingsTemplate;
+	static C(Other: UObject | any): DatasmithCameraLookatTrackingSettingsTemplate;
+}
+
+declare class DatasmithCineCameraActorTemplate extends DatasmithObjectTemplate { 
+	LookatTrackingSettings: DatasmithCameraLookatTrackingSettingsTemplate;
+	static Load(ResourceName: string): DatasmithCineCameraActorTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithCineCameraActorTemplate;
+	static GetDefaultObject(): DatasmithCineCameraActorTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCineCameraActorTemplate;
+	static C(Other: UObject | any): DatasmithCineCameraActorTemplate;
+}
+
+declare class DatasmithCameraFilmbackSettingsTemplate { 
+	SensorWidth: number;
+	SensorHeight: number;
+	clone() : DatasmithCameraFilmbackSettingsTemplate;
+	static C(Other: UObject | any): DatasmithCameraFilmbackSettingsTemplate;
+}
+
+declare class DatasmithCameraLensSettingsTemplate { 
+	MaxFStop: number;
+	clone() : DatasmithCameraLensSettingsTemplate;
+	static C(Other: UObject | any): DatasmithCameraLensSettingsTemplate;
+}
+
+declare class DatasmithCameraFocusSettingsTemplate { 
+	FocusMethod: ECameraFocusMethod;
+	ManualFocusDistance: number;
+	clone() : DatasmithCameraFocusSettingsTemplate;
+	static C(Other: UObject | any): DatasmithCameraFocusSettingsTemplate;
+}
+
+declare class DatasmithPostProcessSettingsTemplate { 
+	bOverride_WhiteTemp: boolean;
+	bOverride_ColorSaturation: boolean;
+	bOverride_VignetteIntensity: boolean;
+	bOverride_FilmWhitePoint: boolean;
+	bOverride_AutoExposureMethod: boolean;
+	bOverride_CameraISO: boolean;
+	bOverride_CameraShutterSpeed: boolean;
+	bOverride_DepthOfFieldFstop: boolean;
+	WhiteTemp: number;
+	VignetteIntensity: number;
+	FilmWhitePoint: LinearColor;
+	ColorSaturation: Vector4;
+	AutoExposureMethod: EAutoExposureMethod;
+	CameraISO: number;
+	CameraShutterSpeed: number;
+	DepthOfFieldFstop: number;
+	clone() : DatasmithPostProcessSettingsTemplate;
+	static C(Other: UObject | any): DatasmithPostProcessSettingsTemplate;
+}
+
+declare class DatasmithCineCameraComponentTemplate extends DatasmithObjectTemplate { 
+	FilmbackSettings: DatasmithCameraFilmbackSettingsTemplate;
+	LensSettings: DatasmithCameraLensSettingsTemplate;
+	FocusSettings: DatasmithCameraFocusSettingsTemplate;
+	CurrentFocalLength: number;
+	CurrentAperture: number;
+	PostProcessSettings: DatasmithPostProcessSettingsTemplate;
+	static Load(ResourceName: string): DatasmithCineCameraComponentTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithCineCameraComponentTemplate;
+	static GetDefaultObject(): DatasmithCineCameraComponentTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCineCameraComponentTemplate;
+	static C(Other: UObject | any): DatasmithCineCameraComponentTemplate;
+}
+
+declare class DatasmithContentBlueprintLibrary extends BlueprintFunctionLibrary { 
+	static Load(ResourceName: string): DatasmithContentBlueprintLibrary;
+	static Find(Outer: UObject, ResourceName: string): DatasmithContentBlueprintLibrary;
+	static GetDefaultObject(): DatasmithContentBlueprintLibrary;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithContentBlueprintLibrary;
+	static GetDatasmithUserDataValueForKey(UObject: UObject,Key: string): string;
+	static GetDatasmithUserDataKeysAndValuesForValue(UObject: UObject,StringToMatch: string,OutKeys?: string[],OutValues?: string[]): {OutKeys: string[], OutValues: string[]};
+	static GetDatasmithUserData(UObject: UObject): DatasmithAssetUserData;
+	static GetAllObjectsAndValuesForKey(Key: string,ObjectClass: UnrealEngineClass,OutObjects?: UObject[],OutValues?: string[]): {OutObjects: UObject[], OutValues: string[]};
+	static GetAllDatasmithUserData(ObjectClass: UnrealEngineClass,OutUserData?: DatasmithAssetUserData[]): {OutUserData: DatasmithAssetUserData[]};
+	static C(Other: UObject | any): DatasmithContentBlueprintLibrary;
+}
+
+declare class DatasmithCustomActionBase extends UObject { 
+	static Load(ResourceName: string): DatasmithCustomActionBase;
+	static Find(Outer: UObject, ResourceName: string): DatasmithCustomActionBase;
+	static GetDefaultObject(): DatasmithCustomActionBase;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCustomActionBase;
+	static C(Other: UObject | any): DatasmithCustomActionBase;
+}
+
+declare class DatasmithDecalComponentTemplate extends DatasmithObjectTemplate { 
+	SortOrder: number;
+	DecalSize: Vector;
+	Material: MaterialInterface;
+	static Load(ResourceName: string): DatasmithDecalComponentTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithDecalComponentTemplate;
+	static GetDefaultObject(): DatasmithDecalComponentTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithDecalComponentTemplate;
+	static C(Other: UObject | any): DatasmithDecalComponentTemplate;
+}
+
+declare class DatasmithImportedSequencesActor extends Actor { 
+	ImportedSequences: LevelSequence[];
+	static GetDefaultObject(): DatasmithImportedSequencesActor;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithImportedSequencesActor;
+	PlayLevelSequence(SequenceToPlay: LevelSequence): void;
+	static C(Other: UObject | any): DatasmithImportedSequencesActor;
+}
+
+declare class DatasmithCommonTessellationOptions extends DatasmithOptionsBase { 
+	Options: DatasmithTessellationOptions;
+	static Load(ResourceName: string): DatasmithCommonTessellationOptions;
+	static Find(Outer: UObject, ResourceName: string): DatasmithCommonTessellationOptions;
+	static GetDefaultObject(): DatasmithCommonTessellationOptions;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCommonTessellationOptions;
+	static C(Other: UObject | any): DatasmithCommonTessellationOptions;
+}
+
+declare type EDatasmithImportSearchPackagePolicy = 'Current' | 'All' | 'EDatasmithImportSearchPackagePolicy_MAX';
+declare var EDatasmithImportSearchPackagePolicy : { Current:'Current',All:'All',EDatasmithImportSearchPackagePolicy_MAX:'EDatasmithImportSearchPackagePolicy_MAX', };
+declare type EDatasmithImportAssetConflictPolicy = 'Replace' | 'Update' | 'Use' | 'Ignore' | 'EDatasmithImportAssetConflictPolicy_MAX';
+declare var EDatasmithImportAssetConflictPolicy : { Replace:'Replace',Update:'Update',Use:'Use',Ignore:'Ignore',EDatasmithImportAssetConflictPolicy_MAX:'EDatasmithImportAssetConflictPolicy_MAX', };
+declare type EDatasmithImportActorPolicy = 'Update' | 'Full' | 'Ignore' | 'EDatasmithImportActorPolicy_MAX';
+declare var EDatasmithImportActorPolicy : { Update:'Update',Full:'Full',Ignore:'Ignore',EDatasmithImportActorPolicy_MAX:'EDatasmithImportActorPolicy_MAX', };
+declare type EDatasmithImportMaterialQuality = 'UseNoFresnelCurves' | 'UseSimplifierFresnelCurves' | 'UseRealFresnelCurves' | 'EDatasmithImportMaterialQuality_MAX';
+declare var EDatasmithImportMaterialQuality : { UseNoFresnelCurves:'UseNoFresnelCurves',UseSimplifierFresnelCurves:'UseSimplifierFresnelCurves',UseRealFresnelCurves:'UseRealFresnelCurves',EDatasmithImportMaterialQuality_MAX:'EDatasmithImportMaterialQuality_MAX', };
+declare class DatasmithReimportOptions { 
+	bUpdateActors: boolean;
+	bRespawnDeletedActors: boolean;
+	clone() : DatasmithReimportOptions;
+	static C(Other: UObject | any): DatasmithReimportOptions;
+}
+
+declare class DatasmithImportOptions extends DatasmithOptionsBase { 
+	SearchPackagePolicy: EDatasmithImportSearchPackagePolicy;
+	MaterialConflictPolicy: EDatasmithImportAssetConflictPolicy;
+	TextureConflictPolicy: EDatasmithImportAssetConflictPolicy;
+	StaticMeshActorImportPolicy: EDatasmithImportActorPolicy;
+	LightImportPolicy: EDatasmithImportActorPolicy;
+	CameraImportPolicy: EDatasmithImportActorPolicy;
+	OtherActorImportPolicy: EDatasmithImportActorPolicy;
+	MaterialQuality: EDatasmithImportMaterialQuality;
+	BaseOptions: DatasmithImportBaseOptions;
+	ReimportOptions: DatasmithReimportOptions;
+	Filename: string;
+	FilePath: string;
+	static Load(ResourceName: string): DatasmithImportOptions;
+	static Find(Outer: UObject, ResourceName: string): DatasmithImportOptions;
+	static GetDefaultObject(): DatasmithImportOptions;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithImportOptions;
+	static C(Other: UObject | any): DatasmithImportOptions;
+}
+
+declare class DatasmithLandscapeTemplate extends DatasmithObjectTemplate { 
+	LandscapeMaterial: MaterialInterface;
+	StaticLightingLOD: number;
+	static Load(ResourceName: string): DatasmithLandscapeTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithLandscapeTemplate;
+	static GetDefaultObject(): DatasmithLandscapeTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithLandscapeTemplate;
+	static C(Other: UObject | any): DatasmithLandscapeTemplate;
+}
+
+declare class DatasmithLightComponentTemplate extends DatasmithObjectTemplate { 
+	bVisible: boolean;
+	CastShadows: boolean;
+	bUseTemperature: boolean;
+	bUseIESBrightness: boolean;
+	Intensity: number;
+	Temperature: number;
+	IESBrightnessScale: number;
+	LightColor: LinearColor;
+	LightFunctionMaterial: MaterialInterface;
+	IESTexture: TextureLightProfile;
+	static Load(ResourceName: string): DatasmithLightComponentTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithLightComponentTemplate;
+	static GetDefaultObject(): DatasmithLightComponentTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithLightComponentTemplate;
+	static C(Other: UObject | any): DatasmithLightComponentTemplate;
+}
+
+declare class DatasmithStaticParameterSetTemplate { 
+	StaticSwitchParameters: any;
+	clone() : DatasmithStaticParameterSetTemplate;
+	static C(Other: UObject | any): DatasmithStaticParameterSetTemplate;
+}
+
+declare class DatasmithMaterialInstanceTemplate extends DatasmithObjectTemplate { 
+	ParentMaterial: MaterialInterface;
+	ScalarParameterValues: any;
+	VectorParameterValues: any;
+	TextureParameterValues: any;
+	StaticParameters: DatasmithStaticParameterSetTemplate;
+	static Load(ResourceName: string): DatasmithMaterialInstanceTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithMaterialInstanceTemplate;
+	static GetDefaultObject(): DatasmithMaterialInstanceTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithMaterialInstanceTemplate;
+	static C(Other: UObject | any): DatasmithMaterialInstanceTemplate;
+}
+
+declare class DatasmithPointLightComponentTemplate extends DatasmithObjectTemplate { 
+	IntensityUnits: ELightUnits;
+	SourceRadius: number;
+	SourceLength: number;
+	AttenuationRadius: number;
+	static Load(ResourceName: string): DatasmithPointLightComponentTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithPointLightComponentTemplate;
+	static GetDefaultObject(): DatasmithPointLightComponentTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithPointLightComponentTemplate;
+	static C(Other: UObject | any): DatasmithPointLightComponentTemplate;
+}
+
+declare class DatasmithPostProcessVolumeTemplate extends DatasmithObjectTemplate { 
+	Settings: DatasmithPostProcessSettingsTemplate;
+	bEnabled: boolean;
+	bUnbound: boolean;
+	static Load(ResourceName: string): DatasmithPostProcessVolumeTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithPostProcessVolumeTemplate;
+	static GetDefaultObject(): DatasmithPostProcessVolumeTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithPostProcessVolumeTemplate;
+	static C(Other: UObject | any): DatasmithPostProcessVolumeTemplate;
+}
+
+declare class DatasmithScene extends UObject { 
+	AssetImportData: DatasmithSceneImportData;
+	BulkDataVersion: number;
+	StaticMeshes: any;
+	Textures: any;
+	MaterialFunctions: any;
+	Materials: any;
+	LevelSequences: any;
+	LevelVariantSets: any;
+	AssetUserData: AssetUserData[];
+	static Load(ResourceName: string): DatasmithScene;
+	static Find(Outer: UObject, ResourceName: string): DatasmithScene;
+	static GetDefaultObject(): DatasmithScene;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithScene;
+	static C(Other: UObject | any): DatasmithScene;
+}
+
+declare class DatasmithSceneActor extends Actor { 
+	Scene: DatasmithScene;
+	RelatedActors: any;
+	static GetDefaultObject(): DatasmithSceneActor;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSceneActor;
+	static C(Other: UObject | any): DatasmithSceneActor;
+}
+
+declare class DatasmithSceneComponentTemplate extends DatasmithObjectTemplate { 
+	RelativeTransform: Transform;
+	Mobility: EComponentMobility;
+	AttachParent: SceneComponent;
+	bVisible: boolean;
+	Tags: any;
+	static Load(ResourceName: string): DatasmithSceneComponentTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithSceneComponentTemplate;
+	static GetDefaultObject(): DatasmithSceneComponentTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSceneComponentTemplate;
+	static C(Other: UObject | any): DatasmithSceneComponentTemplate;
+}
+
+declare class DatasmithSkyLightComponentTemplate extends DatasmithObjectTemplate { 
+	SourceType: ESkyLightSourceType;
+	CubemapResolution: number;
+	Cubemap: TextureCube;
+	static Load(ResourceName: string): DatasmithSkyLightComponentTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithSkyLightComponentTemplate;
+	static GetDefaultObject(): DatasmithSkyLightComponentTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSkyLightComponentTemplate;
+	static C(Other: UObject | any): DatasmithSkyLightComponentTemplate;
+}
+
+declare class DatasmithSpotLightComponentTemplate extends DatasmithObjectTemplate { 
+	InnerConeAngle: number;
+	OuterConeAngle: number;
+	static Load(ResourceName: string): DatasmithSpotLightComponentTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithSpotLightComponentTemplate;
+	static GetDefaultObject(): DatasmithSpotLightComponentTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSpotLightComponentTemplate;
+	static C(Other: UObject | any): DatasmithSpotLightComponentTemplate;
+}
+
+declare class DatasmithStaticMeshComponentTemplate extends DatasmithObjectTemplate { 
+	StaticMesh: StaticMesh;
+	OverrideMaterials: MaterialInterface[];
+	static Load(ResourceName: string): DatasmithStaticMeshComponentTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshComponentTemplate;
+	static GetDefaultObject(): DatasmithStaticMeshComponentTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshComponentTemplate;
+	static C(Other: UObject | any): DatasmithStaticMeshComponentTemplate;
+}
+
+declare class DatasmithMeshSectionInfoMapTemplate { 
+	Map: any;
+	clone() : DatasmithMeshSectionInfoMapTemplate;
+	static C(Other: UObject | any): DatasmithMeshSectionInfoMapTemplate;
+}
+
+declare class DatasmithMeshBuildSettingsTemplate { 
+	bUseMikkTSpace: boolean;
+	bRecomputeNormals: boolean;
+	bRecomputeTangents: boolean;
+	bRemoveDegenerates: boolean;
+	bBuildAdjacencyBuffer: boolean;
+	bUseHighPrecisionTangentBasis: boolean;
+	bUseFullPrecisionUVs: boolean;
+	bGenerateLightmapUVs: boolean;
+	MinLightmapResolution: number;
+	SrcLightmapIndex: number;
+	DstLightmapIndex: number;
+	clone() : DatasmithMeshBuildSettingsTemplate;
+	static C(Other: UObject | any): DatasmithMeshBuildSettingsTemplate;
+}
+
+declare class DatasmithStaticMaterialTemplate { 
+	MaterialSlotName: string;
+	MaterialInterface: MaterialInterface;
+	clone() : DatasmithStaticMaterialTemplate;
+	static C(Other: UObject | any): DatasmithStaticMaterialTemplate;
+}
+
+declare class DatasmithStaticMeshTemplate extends DatasmithObjectTemplate { 
+	SectionInfoMap: DatasmithMeshSectionInfoMapTemplate;
+	LightMapCoordinateIndex: number;
+	LightMapResolution: number;
+	BuildSettings: DatasmithMeshBuildSettingsTemplate[];
+	StaticMaterials: DatasmithStaticMaterialTemplate[];
+	static Load(ResourceName: string): DatasmithStaticMeshTemplate;
+	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshTemplate;
+	static GetDefaultObject(): DatasmithStaticMeshTemplate;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshTemplate;
+	static C(Other: UObject | any): DatasmithStaticMeshTemplate;
 }
 
 declare type PurchaseType = 'Consumable' | 'Nonconsumable' | 'Undefined' | 'PurchaseType_MAX';
@@ -15742,6 +16475,117 @@ declare class MagicLeapRaycastFunctionLibrary extends BlueprintFunctionLibrary {
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): MagicLeapRaycastFunctionLibrary;
 	static MakeRaycastQueryParams(Position: Vector,Direction: Vector,UpVector: Vector,Width: number,Height: number,HorizontalFovDegrees: number,CollideWithUnobserved: boolean,UserData: number): MagicLeapRaycastQueryParams;
 	static C(Other: UObject | any): MagicLeapRaycastFunctionLibrary;
+}
+
+declare type EClothMassMode = 'UniformMass' | 'TotalMass' | 'Density' | 'MaxClothMassMode' | 'EClothMassMode_MAX';
+declare var EClothMassMode : { UniformMass:'UniformMass',TotalMass:'TotalMass',Density:'Density',MaxClothMassMode:'MaxClothMassMode',EClothMassMode_MAX:'EClothMassMode_MAX', };
+declare class ChaosClothWeightedValue { 
+	Low: number;
+	High: number;
+	clone() : ChaosClothWeightedValue;
+	static C(Other: UObject | any): ChaosClothWeightedValue;
+}
+
+declare type EChaosClothTetherMode = 'FastTetherFastLength' | 'AccurateTetherFastLength' | 'AccurateTetherAccurateLength' | 'MaxChaosClothTetherMode' | 'EChaosClothTetherMode_MAX';
+declare var EChaosClothTetherMode : { FastTetherFastLength:'FastTetherFastLength',AccurateTetherFastLength:'AccurateTetherFastLength',AccurateTetherAccurateLength:'AccurateTetherAccurateLength',MaxChaosClothTetherMode:'MaxChaosClothTetherMode',EChaosClothTetherMode_MAX:'EChaosClothTetherMode_MAX', };
+declare class ChaosClothConfig extends ClothConfigCommon { 
+	MassMode: EClothMassMode;
+	UniformMass: number;
+	TotalMass: number;
+	Density: number;
+	MinPerParticleMass: number;
+	EdgeStiffness: number;
+	BendingStiffness: number;
+	bUseBendingElements: boolean;
+	AreaStiffness: number;
+	VolumeStiffness: number;
+	TetherStiffness: ChaosClothWeightedValue;
+	LimitScale: number;
+	bUseGeodesicDistance: boolean;
+	ShapeTargetStiffness: number;
+	CollisionThickness: number;
+	FrictionCoefficient: number;
+	bUseCCD: boolean;
+	bUseSelfCollisions: boolean;
+	SelfCollisionThickness: number;
+	bUseLegacyBackstop: boolean;
+	DampingCoefficient: number;
+	bUsePointBasedWindModel: boolean;
+	DragCoefficient: number;
+	LiftCoefficient: number;
+	bUseGravityOverride: boolean;
+	GravityScale: number;
+	Gravity: Vector;
+	AnimDriveStiffness: ChaosClothWeightedValue;
+	AnimDriveDamping: ChaosClothWeightedValue;
+	LinearVelocityScale: Vector;
+	AngularVelocityScale: number;
+	FictitiousAngularScale: number;
+	bUseTetrahedralConstraints: boolean;
+	bUseThinShellVolumeConstraints: boolean;
+	bUseContinuousCollisionDetection: boolean;
+	TetherMode: EChaosClothTetherMode;
+	AnimDriveSpringStiffness: number;
+	StrainLimitingStiffness: number;
+	static Load(ResourceName: string): ChaosClothConfig;
+	static Find(Outer: UObject, ResourceName: string): ChaosClothConfig;
+	static GetDefaultObject(): ChaosClothConfig;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothConfig;
+	static C(Other: UObject | any): ChaosClothConfig;
+}
+
+declare class ChaosClothSharedSimConfig extends ClothSharedConfigCommon { 
+	IterationCount: number;
+	SubdivisionCount: number;
+	SelfCollisionThickness: number;
+	CollisionThickness: number;
+	bUseDampingOverride: boolean;
+	Damping: number;
+	bUseGravityOverride: boolean;
+	GravityScale: number;
+	Gravity: Vector;
+	bUseLocalSpaceSimulation: boolean;
+	bUseXPBDConstraints: boolean;
+	static Load(ResourceName: string): ChaosClothSharedSimConfig;
+	static Find(Outer: UObject, ResourceName: string): ChaosClothSharedSimConfig;
+	static GetDefaultObject(): ChaosClothSharedSimConfig;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothSharedSimConfig;
+	static C(Other: UObject | any): ChaosClothSharedSimConfig;
+}
+
+declare class ChaosClothingSimulationFactory extends ClothingSimulationFactory { 
+	static Load(ResourceName: string): ChaosClothingSimulationFactory;
+	static Find(Outer: UObject, ResourceName: string): ChaosClothingSimulationFactory;
+	static GetDefaultObject(): ChaosClothingSimulationFactory;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothingSimulationFactory;
+	static C(Other: UObject | any): ChaosClothingSimulationFactory;
+}
+
+declare class ChaosClothingInteractor extends ClothingInteractor { 
+	static Load(ResourceName: string): ChaosClothingInteractor;
+	static Find(Outer: UObject, ResourceName: string): ChaosClothingInteractor;
+	static GetDefaultObject(): ChaosClothingInteractor;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothingInteractor;
+	SetVelocityScale(LinearVelocityScale: Vector,AngularVelocityScale: number,FictitiousAngularScale: number): void;
+	SetMaterialLinear(EdgeStiffness: number,BendingStiffness: number,AreaStiffness: number): void;
+	SetLongRangeAttachmentLinear(TetherStiffness: number): void;
+	SetLongRangeAttachment(TetherStiffness: Vector2D): void;
+	SetGravity(GravityScale: number,bIsGravityOverridden: boolean,GravityOverride: Vector): void;
+	SetDamping(DampingCoefficient: number): void;
+	SetCollision(CollisionThickness: number,FrictionCoefficient: number,bUseCCD: boolean,SelfCollisionThickness: number): void;
+	SetAnimDriveLinear(AnimDriveStiffness: number): void;
+	SetAnimDrive(AnimDriveStiffness: Vector2D,AnimDriveDamping: Vector2D): void;
+	SetAerodynamics(DragCoefficient: number,LiftCoefficient: number,WindVelocity: Vector): void;
+	ResetAndTeleport(bReset: boolean,bTeleport: boolean): void;
+	static C(Other: UObject | any): ChaosClothingInteractor;
+}
+
+declare class ChaosClothingSimulationInteractor extends ClothingSimulationInteractor { 
+	static Load(ResourceName: string): ChaosClothingSimulationInteractor;
+	static Find(Outer: UObject, ResourceName: string): ChaosClothingSimulationInteractor;
+	static GetDefaultObject(): ChaosClothingSimulationInteractor;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): ChaosClothingSimulationInteractor;
+	static C(Other: UObject | any): ChaosClothingSimulationInteractor;
 }
 
 declare class WmfMediaSettings extends UObject { 
@@ -16992,850 +17836,6 @@ declare class OpenXRHandTrackingLiveLinkRemapAsset extends LiveLinkRetargetAsset
 	static GetDefaultObject(): OpenXRHandTrackingLiveLinkRemapAsset;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): OpenXRHandTrackingLiveLinkRemapAsset;
 	static C(Other: UObject | any): OpenXRHandTrackingLiveLinkRemapAsset;
-}
-
-declare class VariantDependency { 
-	VariantSet: VariantSet;
-	Variant: Variant;
-	bEnabled: boolean;
-	clone() : VariantDependency;
-	static C(Other: UObject | any): VariantDependency;
-}
-
-declare class CapturedPropSegment { 
-	PropertyName: string;
-	PropertyIndex: number;
-	ComponentName: string;
-	clone() : CapturedPropSegment;
-	static C(Other: UObject | any): CapturedPropSegment;
-}
-
-declare type EPropertyValueCategory = 'Undefined' | 'Generic' | 'RelativeLocation' | 'RelativeRotation' | 'RelativeScale3D' | 'Visibility' | 'Material' | 'Color' | 'Option' | 'EPropertyValueCategory_MAX';
-declare var EPropertyValueCategory : { Undefined:'Undefined',Generic:'Generic',RelativeLocation:'RelativeLocation',RelativeRotation:'RelativeRotation',RelativeScale3D:'RelativeScale3D',Visibility:'Visibility',Material:'Material',Color:'Color',Option:'Option',EPropertyValueCategory_MAX:'EPropertyValueCategory_MAX', };
-declare class PropertyValue extends UObject { 
-	Properties: any[];
-	PropertyIndices: number[];
-	CapturedPropSegments: CapturedPropSegment[];
-	FullDisplayString: string;
-	PropertySetterName: string;
-	PropertySetterParameterDefaults: any;
-	bHasRecordedData: boolean;
-	LeafPropertyClass: UnrealEngineClass;
-	ValueBytes: number[];
-	PropCategory: EPropertyValueCategory;
-	DisplayOrder: any;
-	static Load(ResourceName: string): PropertyValue;
-	static Find(Outer: UObject, ResourceName: string): PropertyValue;
-	static GetDefaultObject(): PropertyValue;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValue;
-	HasRecordedData(): boolean;
-	GetPropertyTooltip(): string;
-	GetFullDisplayString(): string;
-	static C(Other: UObject | any): PropertyValue;
-}
-
-declare class FunctionCaller { 
-	FunctionName: string;
-	FunctionEntry: any;
-	DisplayOrder: any;
-	clone() : FunctionCaller;
-	static C(Other: UObject | any): FunctionCaller;
-}
-
-declare class VariantObjectBinding extends UObject { 
-	CachedActorLabel: string;
-	ObjectPtr: SoftObjectPath;
-	LazyObjectPtr: any;
-	CapturedProperties: PropertyValue[];
-	FunctionCallers: FunctionCaller[];
-	static Load(ResourceName: string): VariantObjectBinding;
-	static Find(Outer: UObject, ResourceName: string): VariantObjectBinding;
-	static GetDefaultObject(): VariantObjectBinding;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): VariantObjectBinding;
-	static C(Other: UObject | any): VariantObjectBinding;
-}
-
-declare class Variant extends UObject { 
-	Dependencies: VariantDependency[];
-	DisplayText: string;
-	ObjectBindings: VariantObjectBinding[];
-	Thumbnail: Texture2D;
-	static Load(ResourceName: string): Variant;
-	static Find(Outer: UObject, ResourceName: string): Variant;
-	static GetDefaultObject(): Variant;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Variant;
-	SwitchOn(): void;
-	SetThumbnailFromTexture(NewThumbnail: Texture2D): void;
-	SetThumbnailFromFile(FilePath: string): void;
-	SetThumbnailFromEditorViewport(): void;
-	SetThumbnailFromCamera(WorldContextObject: UObject,CameraTransform: Transform,FOVDegrees: number,MinZ: number,Gamma: number): void;
-	SetDisplayText(NewDisplayText: string): void;
-	SetDependency(index: number,Dependency?: VariantDependency): {Dependency: VariantDependency};
-	IsActive(): boolean;
-	GetThumbnail(): Texture2D;
-	GetParent(): VariantSet;
-	GetNumDependencies(): number;
-	GetNumActors(): number;
-	GetDisplayText(): string;
-	GetDependents(LevelVariantSets: LevelVariantSets,bOnlyEnabledDependencies: boolean): Variant[];
-	GetDependency(index: number): VariantDependency;
-	GetActor(ActorIndex: number): Actor;
-	DeleteDependency(index: number): void;
-	AddDependency(Dependency?: VariantDependency): {Dependency: VariantDependency, $: number};
-	static C(Other: UObject | any): Variant;
-}
-
-declare class VariantSet extends UObject { 
-	DisplayText: string;
-	bExpanded: boolean;
-	Variants: Variant[];
-	Thumbnail: Texture2D;
-	static Load(ResourceName: string): VariantSet;
-	static Find(Outer: UObject, ResourceName: string): VariantSet;
-	static GetDefaultObject(): VariantSet;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): VariantSet;
-	SetThumbnailFromTexture(NewThumbnail: Texture2D): void;
-	SetThumbnailFromFile(FilePath: string): void;
-	SetThumbnailFromEditorViewport(): void;
-	SetThumbnailFromCamera(WorldContextObject: UObject,CameraTransform: Transform,FOVDegrees: number,MinZ: number,Gamma: number): void;
-	SetDisplayText(NewDisplayText: string): void;
-	GetVariantByName(VariantName: string): Variant;
-	GetVariant(VariantIndex: number): Variant;
-	GetThumbnail(): Texture2D;
-	GetParent(): LevelVariantSets;
-	GetNumVariants(): number;
-	GetDisplayText(): string;
-	static C(Other: UObject | any): VariantSet;
-}
-
-declare class LevelVariantSets extends UObject { 
-	DirectorBlueprint: UObject;
-	DirectorClass: UnrealEngineClass;
-	VariantSets: VariantSet[];
-	static Load(ResourceName: string): LevelVariantSets;
-	static Find(Outer: UObject, ResourceName: string): LevelVariantSets;
-	static GetDefaultObject(): LevelVariantSets;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): LevelVariantSets;
-	GetVariantSetByName(VariantSetName: string): VariantSet;
-	GetVariantSet(VariantSetIndex: number): VariantSet;
-	GetNumVariantSets(): number;
-	static C(Other: UObject | any): LevelVariantSets;
-}
-
-declare class LevelVariantSetsActor extends Actor { 
-	LevelVariantSets: SoftObjectPath;
-	DirectorInstances: any;
-	static GetDefaultObject(): LevelVariantSetsActor;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): LevelVariantSetsActor;
-	SwitchOnVariantByName(VariantSetName: string,VariantName: string): boolean;
-	SwitchOnVariantByIndex(VariantSetIndex: number,VariantIndex: number): boolean;
-	SetLevelVariantSets(InVariantSets: LevelVariantSets): void;
-	GetLevelVariantSets(bLoad: boolean): LevelVariantSets;
-	static C(Other: UObject | any): LevelVariantSetsActor;
-}
-
-declare class LevelVariantSetsFunctionDirector extends UObject { 
-	static Load(ResourceName: string): LevelVariantSetsFunctionDirector;
-	static Find(Outer: UObject, ResourceName: string): LevelVariantSetsFunctionDirector;
-	static GetDefaultObject(): LevelVariantSetsFunctionDirector;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): LevelVariantSetsFunctionDirector;
-	static C(Other: UObject | any): LevelVariantSetsFunctionDirector;
-}
-
-declare class PropertyValueTransform extends PropertyValue { 
-	static Load(ResourceName: string): PropertyValueTransform;
-	static Find(Outer: UObject, ResourceName: string): PropertyValueTransform;
-	static GetDefaultObject(): PropertyValueTransform;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueTransform;
-	static C(Other: UObject | any): PropertyValueTransform;
-}
-
-declare class PropertyValueVisibility extends PropertyValue { 
-	static Load(ResourceName: string): PropertyValueVisibility;
-	static Find(Outer: UObject, ResourceName: string): PropertyValueVisibility;
-	static GetDefaultObject(): PropertyValueVisibility;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueVisibility;
-	static C(Other: UObject | any): PropertyValueVisibility;
-}
-
-declare class PropertyValueColor extends PropertyValue { 
-	static Load(ResourceName: string): PropertyValueColor;
-	static Find(Outer: UObject, ResourceName: string): PropertyValueColor;
-	static GetDefaultObject(): PropertyValueColor;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueColor;
-	static C(Other: UObject | any): PropertyValueColor;
-}
-
-declare class PropertyValueMaterial extends PropertyValue { 
-	static Load(ResourceName: string): PropertyValueMaterial;
-	static Find(Outer: UObject, ResourceName: string): PropertyValueMaterial;
-	static GetDefaultObject(): PropertyValueMaterial;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueMaterial;
-	static C(Other: UObject | any): PropertyValueMaterial;
-}
-
-declare class PropertyValueOption extends PropertyValue { 
-	static Load(ResourceName: string): PropertyValueOption;
-	static Find(Outer: UObject, ResourceName: string): PropertyValueOption;
-	static GetDefaultObject(): PropertyValueOption;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueOption;
-	static C(Other: UObject | any): PropertyValueOption;
-}
-
-declare class PropertyValueSoftObject extends PropertyValue { 
-	static Load(ResourceName: string): PropertyValueSoftObject;
-	static Find(Outer: UObject, ResourceName: string): PropertyValueSoftObject;
-	static GetDefaultObject(): PropertyValueSoftObject;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PropertyValueSoftObject;
-	static C(Other: UObject | any): PropertyValueSoftObject;
-}
-
-declare class SwitchActor extends Actor { 
-	SceneComponent: SceneComponent;
-	LastSelectedOption: number;
-	static GetDefaultObject(): SwitchActor;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): SwitchActor;
-	SelectOption(OptionIndex: number): void;
-	GetSelectedOption(): number;
-	GetOptions(): Actor[];
-	static C(Other: UObject | any): SwitchActor;
-}
-
-declare class DatasmithObjectTemplate extends UObject { 
-	static Load(ResourceName: string): DatasmithObjectTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithObjectTemplate;
-	static GetDefaultObject(): DatasmithObjectTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithObjectTemplate;
-	static C(Other: UObject | any): DatasmithObjectTemplate;
-}
-
-declare class DatasmithActorTemplate extends DatasmithObjectTemplate { 
-	Layers: any;
-	Tags: any;
-	static Load(ResourceName: string): DatasmithActorTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithActorTemplate;
-	static GetDefaultObject(): DatasmithActorTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithActorTemplate;
-	static C(Other: UObject | any): DatasmithActorTemplate;
-}
-
-declare class DatasmithAdditionalData extends UObject { 
-	static Load(ResourceName: string): DatasmithAdditionalData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithAdditionalData;
-	static GetDefaultObject(): DatasmithAdditionalData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithAdditionalData;
-	static C(Other: UObject | any): DatasmithAdditionalData;
-}
-
-declare type EDatasmithAreaLightActorType = 'Point' | 'Spot' | 'Rect' | 'EDatasmithAreaLightActorType_MAX';
-declare var EDatasmithAreaLightActorType : { Point:'Point',Spot:'Spot',Rect:'Rect',EDatasmithAreaLightActorType_MAX:'EDatasmithAreaLightActorType_MAX', };
-declare type EDatasmithAreaLightActorShape = 'Rectangle' | 'Disc' | 'Sphere' | 'Cylinder' | 'None' | 'EDatasmithAreaLightActorShape_MAX';
-declare var EDatasmithAreaLightActorShape : { Rectangle:'Rectangle',Disc:'Disc',Sphere:'Sphere',Cylinder:'Cylinder',None:'None',EDatasmithAreaLightActorShape_MAX:'EDatasmithAreaLightActorShape_MAX', };
-declare class DatasmithAreaLightActor extends Actor { 
-	Mobility: EComponentMobility;
-	LightType: EDatasmithAreaLightActorType;
-	LightShape: EDatasmithAreaLightActorShape;
-	Dimensions: Vector2D;
-	Intensity: number;
-	IntensityUnits: ELightUnits;
-	Color: LinearColor;
-	Temperature: number;
-	IESTexture: TextureLightProfile;
-	bUseIESBrightness: boolean;
-	IESBrightnessScale: number;
-	Rotation: Rotator;
-	SourceRadius: number;
-	SourceLength: number;
-	AttenuationRadius: number;
-	SpotlightInnerAngle: number;
-	SpotlightOuterAngle: number;
-	static GetDefaultObject(): DatasmithAreaLightActor;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithAreaLightActor;
-	static C(Other: UObject | any): DatasmithAreaLightActor;
-}
-
-declare class DatasmithAreaLightActorTemplate extends DatasmithObjectTemplate { 
-	LightType: EDatasmithAreaLightActorType;
-	LightShape: EDatasmithAreaLightActorShape;
-	Dimensions: Vector2D;
-	Color: LinearColor;
-	Intensity: number;
-	IntensityUnits: ELightUnits;
-	Temperature: number;
-	IESTexture: TextureLightProfile;
-	bUseIESBrightness: boolean;
-	IESBrightnessScale: number;
-	Rotation: Rotator;
-	SourceRadius: number;
-	SourceLength: number;
-	AttenuationRadius: number;
-	static Load(ResourceName: string): DatasmithAreaLightActorTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithAreaLightActorTemplate;
-	static GetDefaultObject(): DatasmithAreaLightActorTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithAreaLightActorTemplate;
-	static C(Other: UObject | any): DatasmithAreaLightActorTemplate;
-}
-
-declare class DatasmithAssetImportOptions { 
-	PackagePath: string;
-	clone() : DatasmithAssetImportOptions;
-	static C(Other: UObject | any): DatasmithAssetImportOptions;
-}
-
-declare class DatasmithAssetImportData extends AssetImportData { 
-	AssetImportOptions: DatasmithAssetImportOptions;
-	AdditionalData: DatasmithAdditionalData[];
-	static Load(ResourceName: string): DatasmithAssetImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithAssetImportData;
-	static GetDefaultObject(): DatasmithAssetImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithAssetImportData;
-	static C(Other: UObject | any): DatasmithAssetImportData;
-}
-
-declare type EDatasmithImportLightmapMin = 'LIGHTMAP_16' | 'LIGHTMAP_32' | 'LIGHTMAP_64' | 'LIGHTMAP_128' | 'LIGHTMAP_256' | 'LIGHTMAP_512' | 'LIGHTMAP_MAX';
-declare var EDatasmithImportLightmapMin : { LIGHTMAP_16:'LIGHTMAP_16',LIGHTMAP_32:'LIGHTMAP_32',LIGHTMAP_64:'LIGHTMAP_64',LIGHTMAP_128:'LIGHTMAP_128',LIGHTMAP_256:'LIGHTMAP_256',LIGHTMAP_512:'LIGHTMAP_512',LIGHTMAP_MAX:'LIGHTMAP_MAX', };
-declare type EDatasmithImportLightmapMax = 'LIGHTMAP_64' | 'LIGHTMAP_128' | 'LIGHTMAP_256' | 'LIGHTMAP_512' | 'LIGHTMAP_1024' | 'LIGHTMAP_2048' | 'LIGHTMAP_4096' | 'LIGHTMAP_MAX';
-declare var EDatasmithImportLightmapMax : { LIGHTMAP_64:'LIGHTMAP_64',LIGHTMAP_128:'LIGHTMAP_128',LIGHTMAP_256:'LIGHTMAP_256',LIGHTMAP_512:'LIGHTMAP_512',LIGHTMAP_1024:'LIGHTMAP_1024',LIGHTMAP_2048:'LIGHTMAP_2048',LIGHTMAP_4096:'LIGHTMAP_4096',LIGHTMAP_MAX:'LIGHTMAP_MAX', };
-declare class DatasmithStaticMeshImportOptions { 
-	MinLightmapResolution: EDatasmithImportLightmapMin;
-	MaxLightmapResolution: EDatasmithImportLightmapMax;
-	bGenerateLightmapUVs: boolean;
-	bRemoveDegenerates: boolean;
-	clone() : DatasmithStaticMeshImportOptions;
-	static C(Other: UObject | any): DatasmithStaticMeshImportOptions;
-}
-
-declare class DatasmithStaticMeshImportData extends DatasmithAssetImportData { 
-	ImportOptions: DatasmithStaticMeshImportOptions;
-	static Load(ResourceName: string): DatasmithStaticMeshImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshImportData;
-	static GetDefaultObject(): DatasmithStaticMeshImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshImportData;
-	static C(Other: UObject | any): DatasmithStaticMeshImportData;
-}
-
-declare type EDatasmithCADStitchingTechnique = 'StitchingNone' | 'StitchingHeal' | 'StitchingSew' | 'EDatasmithCADStitchingTechnique_MAX';
-declare var EDatasmithCADStitchingTechnique : { StitchingNone:'StitchingNone',StitchingHeal:'StitchingHeal',StitchingSew:'StitchingSew',EDatasmithCADStitchingTechnique_MAX:'EDatasmithCADStitchingTechnique_MAX', };
-declare class DatasmithTessellationOptions { 
-	ChordTolerance: number;
-	MaxEdgeLength: number;
-	NormalTolerance: number;
-	StitchingTechnique: EDatasmithCADStitchingTechnique;
-	clone() : DatasmithTessellationOptions;
-	static C(Other: UObject | any): DatasmithTessellationOptions;
-}
-
-declare class DatasmithStaticMeshCADImportData extends DatasmithStaticMeshImportData { 
-	TessellationOptions: DatasmithTessellationOptions;
-	ModelUnit: any;
-	ModelTolerance: any;
-	ResourcePath: string;
-	ResourceFilename: string;
-	AuxiliaryFilenames: string[];
-	static Load(ResourceName: string): DatasmithStaticMeshCADImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshCADImportData;
-	static GetDefaultObject(): DatasmithStaticMeshCADImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshCADImportData;
-	static C(Other: UObject | any): DatasmithStaticMeshCADImportData;
-}
-
-declare type EDatasmithImportScene = 'NewLevel' | 'CurrentLevel' | 'AssetsOnly' | 'EDatasmithImportScene_MAX';
-declare var EDatasmithImportScene : { NewLevel:'NewLevel',CurrentLevel:'CurrentLevel',AssetsOnly:'AssetsOnly',EDatasmithImportScene_MAX:'EDatasmithImportScene_MAX', };
-declare class DatasmithImportBaseOptions { 
-	SceneHandling: EDatasmithImportScene;
-	bIncludeGeometry: boolean;
-	bIncludeMaterial: boolean;
-	bIncludeLight: boolean;
-	bIncludeCamera: boolean;
-	bIncludeAnimation: boolean;
-	AssetOptions: DatasmithAssetImportOptions;
-	StaticMeshOptions: DatasmithStaticMeshImportOptions;
-	clone() : DatasmithImportBaseOptions;
-	static C(Other: UObject | any): DatasmithImportBaseOptions;
-}
-
-declare class DatasmithSceneImportData extends AssetImportData { 
-	BaseOptions: DatasmithImportBaseOptions;
-	static Load(ResourceName: string): DatasmithSceneImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithSceneImportData;
-	static GetDefaultObject(): DatasmithSceneImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSceneImportData;
-	static C(Other: UObject | any): DatasmithSceneImportData;
-}
-
-declare class DatasmithOptionsBase extends UObject { 
-	static Load(ResourceName: string): DatasmithOptionsBase;
-	static Find(Outer: UObject, ResourceName: string): DatasmithOptionsBase;
-	static GetDefaultObject(): DatasmithOptionsBase;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithOptionsBase;
-	static C(Other: UObject | any): DatasmithOptionsBase;
-}
-
-declare class DatasmithTranslatedSceneImportData extends DatasmithSceneImportData { 
-	AdditionalOptions: DatasmithOptionsBase[];
-	static Load(ResourceName: string): DatasmithTranslatedSceneImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithTranslatedSceneImportData;
-	static GetDefaultObject(): DatasmithTranslatedSceneImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithTranslatedSceneImportData;
-	static C(Other: UObject | any): DatasmithTranslatedSceneImportData;
-}
-
-declare class DatasmithCADImportSceneData extends DatasmithSceneImportData { 
-	TessellationOptions: DatasmithTessellationOptions;
-	static Load(ResourceName: string): DatasmithCADImportSceneData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithCADImportSceneData;
-	static GetDefaultObject(): DatasmithCADImportSceneData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCADImportSceneData;
-	static C(Other: UObject | any): DatasmithCADImportSceneData;
-}
-
-declare class DatasmithMDLSceneImportData extends DatasmithSceneImportData { 
-	static Load(ResourceName: string): DatasmithMDLSceneImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithMDLSceneImportData;
-	static GetDefaultObject(): DatasmithMDLSceneImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithMDLSceneImportData;
-	static C(Other: UObject | any): DatasmithMDLSceneImportData;
-}
-
-declare class DatasmithGLTFSceneImportData extends DatasmithSceneImportData { 
-	Generator: string;
-	Version: number;
-	Author: string;
-	License: string;
-	Source: string;
-	static Load(ResourceName: string): DatasmithGLTFSceneImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithGLTFSceneImportData;
-	static GetDefaultObject(): DatasmithGLTFSceneImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithGLTFSceneImportData;
-	static C(Other: UObject | any): DatasmithGLTFSceneImportData;
-}
-
-declare class DatasmithStaticMeshGLTFImportData extends DatasmithStaticMeshImportData { 
-	SourceMeshName: string;
-	static Load(ResourceName: string): DatasmithStaticMeshGLTFImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshGLTFImportData;
-	static GetDefaultObject(): DatasmithStaticMeshGLTFImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshGLTFImportData;
-	static C(Other: UObject | any): DatasmithStaticMeshGLTFImportData;
-}
-
-declare class DatasmithFBXSceneImportData extends DatasmithSceneImportData { 
-	bGenerateLightmapUVs: boolean;
-	TexturesDir: string;
-	IntermediateSerialization: number;
-	bColorizeMaterials: boolean;
-	static Load(ResourceName: string): DatasmithFBXSceneImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithFBXSceneImportData;
-	static GetDefaultObject(): DatasmithFBXSceneImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithFBXSceneImportData;
-	static C(Other: UObject | any): DatasmithFBXSceneImportData;
-}
-
-declare class DatasmithDeltaGenAssetImportData extends DatasmithAssetImportData { 
-	static Load(ResourceName: string): DatasmithDeltaGenAssetImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithDeltaGenAssetImportData;
-	static GetDefaultObject(): DatasmithDeltaGenAssetImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithDeltaGenAssetImportData;
-	static C(Other: UObject | any): DatasmithDeltaGenAssetImportData;
-}
-
-declare class DatasmithDeltaGenSceneImportData extends DatasmithFBXSceneImportData { 
-	bMergeNodes: boolean;
-	bOptimizeDuplicatedNodes: boolean;
-	bRemoveInvisibleNodes: boolean;
-	bSimplifyNodeHierarchy: boolean;
-	bImportVar: boolean;
-	VarPath: string;
-	bImportPos: boolean;
-	PosPath: string;
-	bImportTml: boolean;
-	TmlPath: string;
-	static Load(ResourceName: string): DatasmithDeltaGenSceneImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithDeltaGenSceneImportData;
-	static GetDefaultObject(): DatasmithDeltaGenSceneImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithDeltaGenSceneImportData;
-	static C(Other: UObject | any): DatasmithDeltaGenSceneImportData;
-}
-
-declare class DatasmithVREDAssetImportData extends DatasmithAssetImportData { 
-	static Load(ResourceName: string): DatasmithVREDAssetImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithVREDAssetImportData;
-	static GetDefaultObject(): DatasmithVREDAssetImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithVREDAssetImportData;
-	static C(Other: UObject | any): DatasmithVREDAssetImportData;
-}
-
-declare class DatasmithVREDSceneImportData extends DatasmithFBXSceneImportData { 
-	bMergeNodes: boolean;
-	bOptimizeDuplicatedNodes: boolean;
-	bImportMats: boolean;
-	MatsPath: string;
-	bImportVar: boolean;
-	bCleanVar: boolean;
-	VarPath: string;
-	bImportLightInfo: boolean;
-	LightInfoPath: string;
-	bImportClipInfo: boolean;
-	ClipInfoPath: string;
-	static Load(ResourceName: string): DatasmithVREDSceneImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithVREDSceneImportData;
-	static GetDefaultObject(): DatasmithVREDSceneImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithVREDSceneImportData;
-	static C(Other: UObject | any): DatasmithVREDSceneImportData;
-}
-
-declare class DatasmithIFCSceneImportData extends DatasmithSceneImportData { 
-	static Load(ResourceName: string): DatasmithIFCSceneImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithIFCSceneImportData;
-	static GetDefaultObject(): DatasmithIFCSceneImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithIFCSceneImportData;
-	static C(Other: UObject | any): DatasmithIFCSceneImportData;
-}
-
-declare class DatasmithStaticMeshIFCImportData extends DatasmithStaticMeshImportData { 
-	SourceGlobalId: string;
-	static Load(ResourceName: string): DatasmithStaticMeshIFCImportData;
-	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshIFCImportData;
-	static GetDefaultObject(): DatasmithStaticMeshIFCImportData;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshIFCImportData;
-	static C(Other: UObject | any): DatasmithStaticMeshIFCImportData;
-}
-
-declare class DatasmithCameraLookatTrackingSettingsTemplate { 
-	bEnableLookAtTracking: boolean;
-	bAllowRoll: boolean;
-	ActorToTrack: Actor;
-	clone() : DatasmithCameraLookatTrackingSettingsTemplate;
-	static C(Other: UObject | any): DatasmithCameraLookatTrackingSettingsTemplate;
-}
-
-declare class DatasmithCineCameraActorTemplate extends DatasmithObjectTemplate { 
-	LookatTrackingSettings: DatasmithCameraLookatTrackingSettingsTemplate;
-	static Load(ResourceName: string): DatasmithCineCameraActorTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithCineCameraActorTemplate;
-	static GetDefaultObject(): DatasmithCineCameraActorTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCineCameraActorTemplate;
-	static C(Other: UObject | any): DatasmithCineCameraActorTemplate;
-}
-
-declare class DatasmithCameraFilmbackSettingsTemplate { 
-	SensorWidth: number;
-	SensorHeight: number;
-	clone() : DatasmithCameraFilmbackSettingsTemplate;
-	static C(Other: UObject | any): DatasmithCameraFilmbackSettingsTemplate;
-}
-
-declare class DatasmithCameraLensSettingsTemplate { 
-	MaxFStop: number;
-	clone() : DatasmithCameraLensSettingsTemplate;
-	static C(Other: UObject | any): DatasmithCameraLensSettingsTemplate;
-}
-
-declare class DatasmithCameraFocusSettingsTemplate { 
-	FocusMethod: ECameraFocusMethod;
-	ManualFocusDistance: number;
-	clone() : DatasmithCameraFocusSettingsTemplate;
-	static C(Other: UObject | any): DatasmithCameraFocusSettingsTemplate;
-}
-
-declare class DatasmithPostProcessSettingsTemplate { 
-	bOverride_WhiteTemp: boolean;
-	bOverride_ColorSaturation: boolean;
-	bOverride_VignetteIntensity: boolean;
-	bOverride_FilmWhitePoint: boolean;
-	bOverride_AutoExposureMethod: boolean;
-	bOverride_CameraISO: boolean;
-	bOverride_CameraShutterSpeed: boolean;
-	bOverride_DepthOfFieldFstop: boolean;
-	WhiteTemp: number;
-	VignetteIntensity: number;
-	FilmWhitePoint: LinearColor;
-	ColorSaturation: Vector4;
-	AutoExposureMethod: EAutoExposureMethod;
-	CameraISO: number;
-	CameraShutterSpeed: number;
-	DepthOfFieldFstop: number;
-	clone() : DatasmithPostProcessSettingsTemplate;
-	static C(Other: UObject | any): DatasmithPostProcessSettingsTemplate;
-}
-
-declare class DatasmithCineCameraComponentTemplate extends DatasmithObjectTemplate { 
-	FilmbackSettings: DatasmithCameraFilmbackSettingsTemplate;
-	LensSettings: DatasmithCameraLensSettingsTemplate;
-	FocusSettings: DatasmithCameraFocusSettingsTemplate;
-	CurrentFocalLength: number;
-	CurrentAperture: number;
-	PostProcessSettings: DatasmithPostProcessSettingsTemplate;
-	static Load(ResourceName: string): DatasmithCineCameraComponentTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithCineCameraComponentTemplate;
-	static GetDefaultObject(): DatasmithCineCameraComponentTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCineCameraComponentTemplate;
-	static C(Other: UObject | any): DatasmithCineCameraComponentTemplate;
-}
-
-declare class DatasmithContentBlueprintLibrary extends BlueprintFunctionLibrary { 
-	static Load(ResourceName: string): DatasmithContentBlueprintLibrary;
-	static Find(Outer: UObject, ResourceName: string): DatasmithContentBlueprintLibrary;
-	static GetDefaultObject(): DatasmithContentBlueprintLibrary;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithContentBlueprintLibrary;
-	static GetDatasmithUserDataValueForKey(UObject: UObject,Key: string): string;
-	static GetDatasmithUserDataKeysAndValuesForValue(UObject: UObject,StringToMatch: string,OutKeys?: string[],OutValues?: string[]): {OutKeys: string[], OutValues: string[]};
-	static GetDatasmithUserData(UObject: UObject): DatasmithAssetUserData;
-	static GetAllObjectsAndValuesForKey(Key: string,ObjectClass: UnrealEngineClass,OutObjects?: UObject[],OutValues?: string[]): {OutObjects: UObject[], OutValues: string[]};
-	static GetAllDatasmithUserData(ObjectClass: UnrealEngineClass,OutUserData?: DatasmithAssetUserData[]): {OutUserData: DatasmithAssetUserData[]};
-	static C(Other: UObject | any): DatasmithContentBlueprintLibrary;
-}
-
-declare class DatasmithCustomActionBase extends UObject { 
-	static Load(ResourceName: string): DatasmithCustomActionBase;
-	static Find(Outer: UObject, ResourceName: string): DatasmithCustomActionBase;
-	static GetDefaultObject(): DatasmithCustomActionBase;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCustomActionBase;
-	static C(Other: UObject | any): DatasmithCustomActionBase;
-}
-
-declare class DatasmithDecalComponentTemplate extends DatasmithObjectTemplate { 
-	SortOrder: number;
-	DecalSize: Vector;
-	Material: MaterialInterface;
-	static Load(ResourceName: string): DatasmithDecalComponentTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithDecalComponentTemplate;
-	static GetDefaultObject(): DatasmithDecalComponentTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithDecalComponentTemplate;
-	static C(Other: UObject | any): DatasmithDecalComponentTemplate;
-}
-
-declare class DatasmithImportedSequencesActor extends Actor { 
-	ImportedSequences: LevelSequence[];
-	static GetDefaultObject(): DatasmithImportedSequencesActor;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithImportedSequencesActor;
-	PlayLevelSequence(SequenceToPlay: LevelSequence): void;
-	static C(Other: UObject | any): DatasmithImportedSequencesActor;
-}
-
-declare class DatasmithCommonTessellationOptions extends DatasmithOptionsBase { 
-	Options: DatasmithTessellationOptions;
-	static Load(ResourceName: string): DatasmithCommonTessellationOptions;
-	static Find(Outer: UObject, ResourceName: string): DatasmithCommonTessellationOptions;
-	static GetDefaultObject(): DatasmithCommonTessellationOptions;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithCommonTessellationOptions;
-	static C(Other: UObject | any): DatasmithCommonTessellationOptions;
-}
-
-declare type EDatasmithImportSearchPackagePolicy = 'Current' | 'All' | 'EDatasmithImportSearchPackagePolicy_MAX';
-declare var EDatasmithImportSearchPackagePolicy : { Current:'Current',All:'All',EDatasmithImportSearchPackagePolicy_MAX:'EDatasmithImportSearchPackagePolicy_MAX', };
-declare type EDatasmithImportAssetConflictPolicy = 'Replace' | 'Update' | 'Use' | 'Ignore' | 'EDatasmithImportAssetConflictPolicy_MAX';
-declare var EDatasmithImportAssetConflictPolicy : { Replace:'Replace',Update:'Update',Use:'Use',Ignore:'Ignore',EDatasmithImportAssetConflictPolicy_MAX:'EDatasmithImportAssetConflictPolicy_MAX', };
-declare type EDatasmithImportActorPolicy = 'Update' | 'Full' | 'Ignore' | 'EDatasmithImportActorPolicy_MAX';
-declare var EDatasmithImportActorPolicy : { Update:'Update',Full:'Full',Ignore:'Ignore',EDatasmithImportActorPolicy_MAX:'EDatasmithImportActorPolicy_MAX', };
-declare type EDatasmithImportMaterialQuality = 'UseNoFresnelCurves' | 'UseSimplifierFresnelCurves' | 'UseRealFresnelCurves' | 'EDatasmithImportMaterialQuality_MAX';
-declare var EDatasmithImportMaterialQuality : { UseNoFresnelCurves:'UseNoFresnelCurves',UseSimplifierFresnelCurves:'UseSimplifierFresnelCurves',UseRealFresnelCurves:'UseRealFresnelCurves',EDatasmithImportMaterialQuality_MAX:'EDatasmithImportMaterialQuality_MAX', };
-declare class DatasmithReimportOptions { 
-	bUpdateActors: boolean;
-	bRespawnDeletedActors: boolean;
-	clone() : DatasmithReimportOptions;
-	static C(Other: UObject | any): DatasmithReimportOptions;
-}
-
-declare class DatasmithImportOptions extends DatasmithOptionsBase { 
-	SearchPackagePolicy: EDatasmithImportSearchPackagePolicy;
-	MaterialConflictPolicy: EDatasmithImportAssetConflictPolicy;
-	TextureConflictPolicy: EDatasmithImportAssetConflictPolicy;
-	StaticMeshActorImportPolicy: EDatasmithImportActorPolicy;
-	LightImportPolicy: EDatasmithImportActorPolicy;
-	CameraImportPolicy: EDatasmithImportActorPolicy;
-	OtherActorImportPolicy: EDatasmithImportActorPolicy;
-	MaterialQuality: EDatasmithImportMaterialQuality;
-	BaseOptions: DatasmithImportBaseOptions;
-	ReimportOptions: DatasmithReimportOptions;
-	Filename: string;
-	FilePath: string;
-	static Load(ResourceName: string): DatasmithImportOptions;
-	static Find(Outer: UObject, ResourceName: string): DatasmithImportOptions;
-	static GetDefaultObject(): DatasmithImportOptions;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithImportOptions;
-	static C(Other: UObject | any): DatasmithImportOptions;
-}
-
-declare class DatasmithLandscapeTemplate extends DatasmithObjectTemplate { 
-	LandscapeMaterial: MaterialInterface;
-	StaticLightingLOD: number;
-	static Load(ResourceName: string): DatasmithLandscapeTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithLandscapeTemplate;
-	static GetDefaultObject(): DatasmithLandscapeTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithLandscapeTemplate;
-	static C(Other: UObject | any): DatasmithLandscapeTemplate;
-}
-
-declare class DatasmithLightComponentTemplate extends DatasmithObjectTemplate { 
-	bVisible: boolean;
-	CastShadows: boolean;
-	bUseTemperature: boolean;
-	bUseIESBrightness: boolean;
-	Intensity: number;
-	Temperature: number;
-	IESBrightnessScale: number;
-	LightColor: LinearColor;
-	LightFunctionMaterial: MaterialInterface;
-	IESTexture: TextureLightProfile;
-	static Load(ResourceName: string): DatasmithLightComponentTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithLightComponentTemplate;
-	static GetDefaultObject(): DatasmithLightComponentTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithLightComponentTemplate;
-	static C(Other: UObject | any): DatasmithLightComponentTemplate;
-}
-
-declare class DatasmithStaticParameterSetTemplate { 
-	StaticSwitchParameters: any;
-	clone() : DatasmithStaticParameterSetTemplate;
-	static C(Other: UObject | any): DatasmithStaticParameterSetTemplate;
-}
-
-declare class DatasmithMaterialInstanceTemplate extends DatasmithObjectTemplate { 
-	ParentMaterial: MaterialInterface;
-	ScalarParameterValues: any;
-	VectorParameterValues: any;
-	TextureParameterValues: any;
-	StaticParameters: DatasmithStaticParameterSetTemplate;
-	static Load(ResourceName: string): DatasmithMaterialInstanceTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithMaterialInstanceTemplate;
-	static GetDefaultObject(): DatasmithMaterialInstanceTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithMaterialInstanceTemplate;
-	static C(Other: UObject | any): DatasmithMaterialInstanceTemplate;
-}
-
-declare class DatasmithPointLightComponentTemplate extends DatasmithObjectTemplate { 
-	IntensityUnits: ELightUnits;
-	SourceRadius: number;
-	SourceLength: number;
-	AttenuationRadius: number;
-	static Load(ResourceName: string): DatasmithPointLightComponentTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithPointLightComponentTemplate;
-	static GetDefaultObject(): DatasmithPointLightComponentTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithPointLightComponentTemplate;
-	static C(Other: UObject | any): DatasmithPointLightComponentTemplate;
-}
-
-declare class DatasmithPostProcessVolumeTemplate extends DatasmithObjectTemplate { 
-	Settings: DatasmithPostProcessSettingsTemplate;
-	bEnabled: boolean;
-	bUnbound: boolean;
-	static Load(ResourceName: string): DatasmithPostProcessVolumeTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithPostProcessVolumeTemplate;
-	static GetDefaultObject(): DatasmithPostProcessVolumeTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithPostProcessVolumeTemplate;
-	static C(Other: UObject | any): DatasmithPostProcessVolumeTemplate;
-}
-
-declare class DatasmithScene extends UObject { 
-	AssetImportData: DatasmithSceneImportData;
-	BulkDataVersion: number;
-	StaticMeshes: any;
-	Textures: any;
-	MaterialFunctions: any;
-	Materials: any;
-	LevelSequences: any;
-	LevelVariantSets: any;
-	AssetUserData: AssetUserData[];
-	static Load(ResourceName: string): DatasmithScene;
-	static Find(Outer: UObject, ResourceName: string): DatasmithScene;
-	static GetDefaultObject(): DatasmithScene;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithScene;
-	static C(Other: UObject | any): DatasmithScene;
-}
-
-declare class DatasmithSceneActor extends Actor { 
-	Scene: DatasmithScene;
-	RelatedActors: any;
-	static GetDefaultObject(): DatasmithSceneActor;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSceneActor;
-	static C(Other: UObject | any): DatasmithSceneActor;
-}
-
-declare class DatasmithSceneComponentTemplate extends DatasmithObjectTemplate { 
-	RelativeTransform: Transform;
-	Mobility: EComponentMobility;
-	AttachParent: SceneComponent;
-	bVisible: boolean;
-	Tags: any;
-	static Load(ResourceName: string): DatasmithSceneComponentTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithSceneComponentTemplate;
-	static GetDefaultObject(): DatasmithSceneComponentTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSceneComponentTemplate;
-	static C(Other: UObject | any): DatasmithSceneComponentTemplate;
-}
-
-declare class DatasmithSkyLightComponentTemplate extends DatasmithObjectTemplate { 
-	SourceType: ESkyLightSourceType;
-	CubemapResolution: number;
-	Cubemap: TextureCube;
-	static Load(ResourceName: string): DatasmithSkyLightComponentTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithSkyLightComponentTemplate;
-	static GetDefaultObject(): DatasmithSkyLightComponentTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSkyLightComponentTemplate;
-	static C(Other: UObject | any): DatasmithSkyLightComponentTemplate;
-}
-
-declare class DatasmithSpotLightComponentTemplate extends DatasmithObjectTemplate { 
-	InnerConeAngle: number;
-	OuterConeAngle: number;
-	static Load(ResourceName: string): DatasmithSpotLightComponentTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithSpotLightComponentTemplate;
-	static GetDefaultObject(): DatasmithSpotLightComponentTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithSpotLightComponentTemplate;
-	static C(Other: UObject | any): DatasmithSpotLightComponentTemplate;
-}
-
-declare class DatasmithStaticMeshComponentTemplate extends DatasmithObjectTemplate { 
-	StaticMesh: StaticMesh;
-	OverrideMaterials: MaterialInterface[];
-	static Load(ResourceName: string): DatasmithStaticMeshComponentTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshComponentTemplate;
-	static GetDefaultObject(): DatasmithStaticMeshComponentTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshComponentTemplate;
-	static C(Other: UObject | any): DatasmithStaticMeshComponentTemplate;
-}
-
-declare class DatasmithMeshSectionInfoMapTemplate { 
-	Map: any;
-	clone() : DatasmithMeshSectionInfoMapTemplate;
-	static C(Other: UObject | any): DatasmithMeshSectionInfoMapTemplate;
-}
-
-declare class DatasmithMeshBuildSettingsTemplate { 
-	bUseMikkTSpace: boolean;
-	bRecomputeNormals: boolean;
-	bRecomputeTangents: boolean;
-	bRemoveDegenerates: boolean;
-	bBuildAdjacencyBuffer: boolean;
-	bUseHighPrecisionTangentBasis: boolean;
-	bUseFullPrecisionUVs: boolean;
-	bGenerateLightmapUVs: boolean;
-	MinLightmapResolution: number;
-	SrcLightmapIndex: number;
-	DstLightmapIndex: number;
-	clone() : DatasmithMeshBuildSettingsTemplate;
-	static C(Other: UObject | any): DatasmithMeshBuildSettingsTemplate;
-}
-
-declare class DatasmithStaticMaterialTemplate { 
-	MaterialSlotName: string;
-	MaterialInterface: MaterialInterface;
-	clone() : DatasmithStaticMaterialTemplate;
-	static C(Other: UObject | any): DatasmithStaticMaterialTemplate;
-}
-
-declare class DatasmithStaticMeshTemplate extends DatasmithObjectTemplate { 
-	SectionInfoMap: DatasmithMeshSectionInfoMapTemplate;
-	LightMapCoordinateIndex: number;
-	LightMapResolution: number;
-	BuildSettings: DatasmithMeshBuildSettingsTemplate[];
-	StaticMaterials: DatasmithStaticMaterialTemplate[];
-	static Load(ResourceName: string): DatasmithStaticMeshTemplate;
-	static Find(Outer: UObject, ResourceName: string): DatasmithStaticMeshTemplate;
-	static GetDefaultObject(): DatasmithStaticMeshTemplate;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): DatasmithStaticMeshTemplate;
-	static C(Other: UObject | any): DatasmithStaticMeshTemplate;
 }
 
 declare type EFixedFoveatedRenderingLevel = 'FFR_Off' | 'FFR_Low' | 'FFR_Medium' | 'FFR_High' | 'FFR_HighTop' | 'FFR_MAX';
